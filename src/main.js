@@ -5,7 +5,6 @@ import store from "./store";
 import BootstrapIcon from '@dvuckovic/vue3-bootstrap-icons';
 import './index.css'
 
-console.log('rewrwerere');
 
 const app = createApp(App);
 app.component('BootstrapIcon', BootstrapIcon);
