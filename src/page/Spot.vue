@@ -1,11 +1,14 @@
 <template>
-    spot
+    <map-route />
 </template>
 
 <script>
+import MapRoute from "../components/MapRoute.vue"
 export default {
+    components:{
+        MapRoute
+    },
     setup() {
-
     }
 }
 </script>

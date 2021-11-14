@@ -1,6 +1,5 @@
 <template>
     <div>
-        map
         <Map />
     </div>
 </template>

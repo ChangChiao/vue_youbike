@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-imput{
-    @apply px-4 py-2;
+.title {
+    @apply font-bold leading-5 text-lg pb-2;
 }
