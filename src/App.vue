@@ -1,12 +1,28 @@
+<template>
+  <Template>
+    <router-view />
+  </Template>
+</template>
+
+
+<script>
+import Template from "./components/Template.vue"
+export default {
+  components:{
+    Template
+  },
+  setup(){
+
+  }
+}
+</script>
+
 <script setup>
+
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 </script>
 
-<template>
-  <router-view />
-  <button class="bg-blue-500 text-lg">go</button>
-</template>
 
 <style>
 #app {
