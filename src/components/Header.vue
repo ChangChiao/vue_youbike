@@ -1,5 +1,5 @@
 <template>
-    <header class="flex justify-center box-border border-solid border-t-8 border-sub items-center">
+    <header class="flex justify-center box-border border-solid border-t-8 border-sub items-center  font-medium">
         <router-link to="/">
             <img class=" pr-10" src="/images/logo.png" alt="">
         </router-link>
@@ -12,7 +12,7 @@
         </div>
         <ul class="menu flex">
             <li v-for="item in menuList" class="mx-3 text-lg" :key="item.path">
-                <router-link :to="item.path">
+                <router-link :to="item.path" class="duration-200">
                     {{item.title}}
                 </router-link>
             </li>
@@ -37,8 +37,14 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style lang="postcss" scoped>
 header{
     height: 88px;
+}
+.router-link-active{
+    font-size: 22px;
+    color: red;
+    background: transparent;
+    @apply text-base border-b-2 border-base;
 }
 </style>

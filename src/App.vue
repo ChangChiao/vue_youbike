@@ -1,15 +1,16 @@
 <template>
-  <Template>
+    <Header />
     <router-view />
-  </Template>
 </template>
 
 
 <script>
-import Template from "./components/Template.vue"
+import Header from "./components/Header.vue"
+// import Template from "./components/Template.vue"
 export default {
   components:{
-    Template
+    // Template
+    Header
   },
   setup(){
 
