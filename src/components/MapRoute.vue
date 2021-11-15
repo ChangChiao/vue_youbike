@@ -27,6 +27,8 @@ import { onMounted, onBeforeUnmount, reactive, toRefs, watch } from "vue"
 export default {
   setup(){
     let map = null
+    let mark = null
+    let markSelf = null
     let routeLayer = null
     const data = reactive({
         city: CITY_LIST[0].value,
@@ -92,6 +94,25 @@ export default {
         }
     );
 
+    const createMark = () => {
+        mark = new L.Icon({
+            iconUrl: '/images/mark/RecordCircle.png',
+            shadowUrl: '',
+            iconSize: [40, 40],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            // shadowSize: [41, 41]
+        })
+        markSelf = new L.Icon({
+            iconUrl: 'images/mark/currentLocation.png',
+            shadowUrl: '',
+            iconSize: [40, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            // shadowSize: [41, 41]
+        })
+    }
+
      const getNowPos = () => {
          if(navigator.geolocation) {
              navigator.geolocation.getCurrentPosition((position) => {
@@ -100,7 +121,7 @@ export default {
                 console.log("longitude", longitude);
                 console.log("latitude", latitude);
                 map.setView([latitude, longitude], 18);
-                L.marker([latitude, longitude]).addTo(map)
+                L.marker([latitude, longitude], { icon: markSelf }).addTo(map)
                 .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
                 .openPopup();
                 getRoute()
@@ -137,6 +158,7 @@ export default {
     }
 
     onMounted(() => {
+        createMark()
         createMap()
     })
 

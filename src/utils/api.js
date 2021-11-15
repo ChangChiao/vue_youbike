@@ -6,6 +6,9 @@ const getAuthorizationHeader = () => {
   let AppID = import.meta.env.VITE_APP_ID;
   let AppKey = import.meta.env.VITE_APP_KEY;
 
+  console.log("AppID", AppID);
+  console.log("AppKey",  AppKey);
+
   const GMTString = new Date().toGMTString();
   const ShaObj = new jsSHA("SHA-1", "TEXT");
   ShaObj.setHMACKey(AppKey, "TEXT");
@@ -19,13 +22,6 @@ const getAuthorizationHeader = () => {
   };
 };
 
-const setConfig = () => {
-  const data = {
-    headers: getAuthorizationHeader(),
-  };
-
-  return data;
-};
 
 const getCity = (data) => {
   const { city = "" } = data;
@@ -35,23 +31,53 @@ const getCity = (data) => {
 
 export const getBikeStation = (sendData) => {
   const { cityPath, data } = getCity(sendData);
-  return api.get(API_STATION+ `/${cityPath}`, { params: { ...data } }, setConfig);
+  let config = {
+    headers: getAuthorizationHeader(),
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_STATION+ `/${cityPath}`, config);
 };
 
 export const getBikeAvailability = (sendData) => {
   const { cityPath, data } = getCity(sendData);
-  return api.get(API_AVAILABLE + `/${cityPath}`, { params: { ...data } }, setConfig);
+  let config = {
+    headers: getAuthorizationHeader(),
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_AVAILABLE + `/${cityPath}`, config);
 };
 
 export const getCyclingShape = (sendData) => {
   const { cityPath, data } = getCity(sendData);
-  return api.get(API_SHAPE + `/${cityPath}`, { params: { ...data } }, setConfig);
+  let config = {
+    headers: getAuthorizationHeader(),
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_SHAPE + `/${cityPath}`, config);
 };
 
 export const getNearStation = (data) => {
-  return api.get(API_NEAYBY_STATION , { params: { ...data } }, setConfig);
+  let config = {
+    headers: getAuthorizationHeader(),
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_NEAYBY_STATION , config);
 };
 
 export const getNearAvailble = (data) => {
-  return api.get(API_NEAYBY_AVAILABLE , { params: { ...data } }, setConfig);
+  let config = {
+    headers: getAuthorizationHeader(),
+    params: {
+      ...data
+    }
+  }
+  return api.get(API_NEAYBY_AVAILABLE , config);
 };

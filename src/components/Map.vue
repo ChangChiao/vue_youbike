@@ -14,8 +14,9 @@ export default {
   setup(){
     let map = null
     let markLayer = null
-    let mark = null
     let markSelf = null
+    let markGray = null
+    let markGreen = null
     const createMap = () => {
         let mapToken = import.meta.env.VITE_MAP_TOKEN;
         map = L.map('map')
@@ -63,8 +64,16 @@ export default {
     const stationList = reactive([])
 
     const createMark = () => {
-        mark = new L.Icon({
-            iconUrl: '/images/mark/RecordCircle.png',
+        markGray = new L.Icon({
+            iconUrl: '/images/mark/serviceStatus0, 2.png',
+            shadowUrl: '',
+            iconSize: [40, 40],
+        iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            // shadowSize: [41, 41]
+        })
+        markGreen = new L.Icon({
+            iconUrl: '/images/mark/available_0(goal).png',
             shadowUrl: '',
             iconSize: [40, 40],
             iconAnchor: [12, 41],
@@ -131,6 +140,7 @@ export default {
         availableList.forEach(item => {
             let { PositionLat, PositionLon } = item.StationPosition
             let { AvailableRentBikes, AvailableReturnBikes, UpdateTime, StationName, StationAddress } = item
+            const mark = AvailableRentBikes > 0 ? markGreen : markGray
             markLayer.addLayer(L.marker([PositionLat, PositionLon], {icon: mark}).bindPopup(`
                 <h2 class="title">${StationName.Zh_tw}</h2>
                 <h4>地址:${StationAddress.Zh_tw}</h4>
