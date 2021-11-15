@@ -15,12 +15,6 @@
 </template>
 
 <script>
-import {
-    Listbox,
-    ListboxButton,
-    ListboxOptions,
-    ListboxOption,
-} from '@headlessui/vue'
 import "leaflet/dist/leaflet.css"
 import L from 'leaflet'
 import 'leaflet.markercluster/dist/MarkerCluster.css';
