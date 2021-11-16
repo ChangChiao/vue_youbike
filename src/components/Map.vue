@@ -8,10 +8,20 @@ import L from 'leaflet'
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
-import { getNearStation, getNearAvailble } from "../utils/api"
-import { onMounted, onBeforeUnmount, reactive } from "vue"
+import { onMounted, onBeforeUnmount } from "vue"
 export default {
-  setup(){
+  props:{
+      availableList:{
+          type:Array,
+          default:()=>[]
+      },
+      isSearchExist:{
+          type:Boolean,
+          default:false
+      }
+  },
+  emits:["getNearByInfo"],
+  setup(props, { emit }){
     let map = null
     let markLayer = null
     let markSelf = null
@@ -30,7 +40,23 @@ export default {
             accessToken: mapToken
         }).addTo(map);
         markLayer = new L.MarkerClusterGroup().addTo(map)
-        getNowPos()
+        props.isSearchExist && getNowPos()
+     }
+
+    const getNowPos = () => {
+         if(navigator.geolocation) {
+             navigator.geolocation.getCurrentPosition((position) => {
+                const longitude = position.coords.longitude
+                const latitude = position.coords.latitude
+                console.log("longitude", longitude);
+                console.log("latitude", latitude);
+                drawSelfMark(latitude, longitude)
+                emit("getNearByInfo", {longitude, latitude})
+             }, (event) => {
+                 const { code, message } = event
+                 console.log("error", `code=${code}, msg=${message}`);
+             })
+         }
      }
 
      const cleanMarker = () => {
@@ -42,30 +68,17 @@ export default {
         })
      }
 
-     const getNowPos = () => {
-         if(navigator.geolocation) {
-             navigator.geolocation.getCurrentPosition((position) => {
-                const longitude = position.coords.longitude
-                const latitude = position.coords.latitude
-                console.log("longitude", longitude);
-                console.log("latitude", latitude);
-                map.setView([latitude, longitude], 18);
-                L.marker([latitude, longitude], { icon: markSelf }).addTo(map)
-                .bindPopup('你在這～')
-                .openPopup();
-                getNearByInfo(longitude, latitude)
-             }, (event) => {
-                 const { code, message } = event
-                 console.log("error", `code=${code}, msg=${message}`);
-             })
-         }
-     }
+    const drawSelfMark = (latitude, longitude) => {
+        map.setView([latitude, longitude], 18);
+        L.marker([latitude, longitude], { icon: markSelf }).addTo(map)
+        .bindPopup('你在這～')
+        .openPopup();
+    }
 
-    const stationList = reactive([])
 
     const createMark = () => {
         markGray = new L.Icon({
-            iconUrl: '/images/mark/serviceStatus0, 2.png',
+            iconUrl: 'images/mark/no-rent.png',
             shadowUrl: '',
             iconSize: [40, 40],
         iconAnchor: [12, 41],
@@ -73,7 +86,7 @@ export default {
             // shadowSize: [41, 41]
         })
         markGreen = new L.Icon({
-            iconUrl: '/images/mark/available_0(goal).png',
+            iconUrl: 'images/mark/bike.png',
             shadowUrl: '',
             iconSize: [40, 40],
             iconAnchor: [12, 41],
@@ -90,44 +103,6 @@ export default {
         })
     }
 
-    const getNearByInfo = async(longitude, latitude) => {
-        const sendData = {
-            $spatialFilter: `nearby(${latitude},${longitude},${500})`
-        }
-        try {
-            const result = await getNearStation(sendData)
-            console.log("station", result);
-            Object.assign(stationList, result)
-            getAvailble(longitude, latitude)
-            // drawMark()
-        } catch (error) {
-            console.log("error", error);
-        }
-    }
-    const availableList = reactive([])
-
-    const getAvailble = async(longitude, latitude) => {
-        const sendData = {
-            $spatialFilter: `nearby(${latitude},${longitude},${500})`
-        }
-        try {
-            const result = await getNearAvailble(sendData)
-            result.forEach(available => {
-                stationList.forEach(station => {
-                    if(station.StationUID === available.StationUID){
-                        available.StationName = station.StationName
-                        available.StationPosition = station.StationPosition
-                        available.StationAddress = station.StationAddress 
-                    }
-                });
-            });
-            Object.assign(availableList, result)
-            console.log("availableList", availableList);
-            drawMark()
-        } catch (error) {
-            console.log("error", error);
-        }
-    }
 
     const transTime = (time) => {
         let date = new Date(time);
@@ -137,7 +112,7 @@ export default {
 
     const drawMark = () => {
         // cleanMarker()
-        availableList.forEach(item => {
+        props.availableList.forEach(item => {
             let { PositionLat, PositionLon } = item.StationPosition
             let { AvailableRentBikes, AvailableReturnBikes, UpdateTime, StationName, StationAddress } = item
             const mark = AvailableRentBikes > 0 ? markGreen : markGray
@@ -162,7 +137,8 @@ export default {
         map = null
     })
     return {
-
+        drawSelfMark,
+        drawMark
     }
   }
 

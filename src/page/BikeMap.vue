@@ -1,6 +1,9 @@
 <template>
     <div>
-        <Map :city="city" :keyword="keyword" />
+        <Map ref="mapInstance" 
+        @getNearByInfo="getNearByInfo"
+        :isSearchExist="isSearchExist" 
+        :availableList=availableList />
     </div>
 </template>
 
@@ -8,20 +11,28 @@
 import { useRoute } from "vue-router";
 import Map from "../components/Map.vue"
 import { getNearStation, getNearAvailble } from "../utils/api"
-import { onMounted, reactive, toRefs, toRefs } from "vue";
+import { onMounted, reactive, toRefs, ref, computed } from "vue";
 export default {
     components:{
         Map
     },
     setup() {
+        const mapInstance = ref(null)
         const route = useRoute();
+        const isSearchExist = computed(()=>{
+            return data.keyword || data.city
+        })
         const data = reactive({
             keyword: "" ,
             city: "",
         })
 
-            const getNearByInfo = async(longitude, latitude) => {
+    const stationList = reactive([])
+    const getNearByInfo = async({ longitude, latitude }) => {
+        console.log("getNearByInfo", longitude, latitude);
         const sendData = {
+            city: data.city,
+            filter: `contains(StationAddress.Zh_tw,'${data.keyword}') or contains(StationName.Zh_tw,'${data.keyword}')`,
             $spatialFilter: `nearby(${latitude},${longitude},${500})`
         }
         try {
@@ -29,7 +40,6 @@ export default {
             console.log("station", result);
             Object.assign(stationList, result)
             getAvailble(longitude, latitude)
-            // drawMark()
         } catch (error) {
             console.log("error", error);
         }
@@ -53,22 +63,33 @@ export default {
             });
             Object.assign(availableList, result)
             console.log("availableList", availableList);
-            drawMark()
+            mapInstance.value.drawMark()
         } catch (error) {
             console.log("error", error);
         }
     }
+
         onMounted(() => {
-            if( route.query.city ){
-                data.city = route.query.city
+            const queryCity = route.query.city
+            if( queryCity ){
+                data.city = queryCity
             }
-            if( route.query.keyword ){
-                data.keyword = route.query.keyword
+            const queryKeyword = route.query.keyword
+            if( queryKeyword ){
+                data.keyword = queryKeyword
             }
+
+            // if( isSearchExist ){
+            //     getNowPos()
+            // }
         })
 
         return {
-            ...toRefs(data)
+            ...toRefs(data),
+            isSearchExist,
+            getNearByInfo,
+            availableList,
+            mapInstance
         }
     }
 }

@@ -6,9 +6,6 @@ const getAuthorizationHeader = () => {
   let AppID = import.meta.env.VITE_APP_ID;
   let AppKey = import.meta.env.VITE_APP_KEY;
 
-  console.log("AppID", AppID);
-  console.log("AppKey",  AppKey);
-
   const GMTString = new Date().toGMTString();
   const ShaObj = new jsSHA("SHA-1", "TEXT");
   ShaObj.setHMACKey(AppKey, "TEXT");

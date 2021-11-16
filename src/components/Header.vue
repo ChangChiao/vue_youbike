@@ -17,8 +17,8 @@
 export default {
     setup() {
         const menuList = [
-            {title:"尋找單車", "path":"/routemap"},
-            {title:"尋找車道", "path":"/bikemap"},
+            {title:"尋找單車", "path":"/bikemap"},
+            {title:"尋找車道", "path":"/routemap"},
             // {title:"周圍景點", "path":"/spot"},
             // {title:"歷史紀錄", "path":"/history"},
         ]
