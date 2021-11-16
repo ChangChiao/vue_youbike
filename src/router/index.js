@@ -1,9 +1,7 @@
 import { createRouter, createWebHashHistory} from "vue-router";
 import Index from "../page/Index.vue";
-import Weather from "../page/Weather.vue";
+import RouteMap from "../page/RouteMap.vue";
 import BikeMap from "../page/BikeMap.vue";
-import History from "../page/History.vue";
-import Spot from "../page/Spot.vue";
 
 const routes = [
     {
@@ -12,24 +10,14 @@ const routes = [
         component: Index,
     },
     {
-        path: "/weather",
-        name: "Weather",
-        component: Weather,
+        path: "/routemap",
+        name: "RouteMap",
+        component: RouteMap,
     },
     {
         path: "/bikemap",
         name: "BikeMap",
         component: BikeMap,
-    },
-    {
-        path: "/history",
-        name: "History",
-        component: History,
-    },
-    {
-        path: "/Spot",
-        name: "Spot",
-        component: Spot
     }
 ];
 

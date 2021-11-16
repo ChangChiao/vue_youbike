@@ -1,17 +1,10 @@
 <template>
-    <header class="flex justify-center box-border border-solid border-t-8 border-sub items-center  font-medium">
+    <header class="flex relative z-20 justify-between shadow-lg items-center px-3 font-medium h-20">
         <router-link to="/">
-            <img class=" pr-10" src="/images/logo.png" alt="">
+            <img class="w-20" src="/images/logo.png" alt="">
         </router-link>
-        <div class="input-box flex h-10 w-56 items-center rounded-3xl text-gray-500">
-            <BootstrapIcon
-                icon="search"
-                size="2x"
-                flip-v />
-            <input class="w-30 pl-4 bg-transparent text-gray-900" placeholder="搜尋自行車租借站" type="text">
-        </div>
         <ul class="menu flex">
-            <li v-for="item in menuList" class="mx-3 text-lg" :key="item.path">
+            <li v-for="item in menuList" class="mx-3 text-lg text-base" :key="item.path">
                 <router-link :to="item.path" class="duration-200">
                     {{item.title}}
                 </router-link>
@@ -24,10 +17,10 @@
 export default {
     setup() {
         const menuList = [
-            {title:"今日天氣", "path":"/weather"},
-            {title:"自行車道", "path":"/bikemap"},
-            {title:"周圍景點", "path":"/spot"},
-            {title:"歷史紀錄", "path":"/history"},
+            {title:"尋找單車", "path":"/routemap"},
+            {title:"尋找車道", "path":"/bikemap"},
+            // {title:"周圍景點", "path":"/spot"},
+            // {title:"歷史紀錄", "path":"/history"},
         ]
 
         return {
@@ -39,12 +32,12 @@ export default {
 
 <style lang="postcss" scoped>
 header{
-    height: 88px;
+    /* height: 80px; */
 }
 .router-link-active{
     font-size: 22px;
     color: red;
     background: transparent;
-    @apply text-base border-b-2 border-base;
+    @apply text-base border-b-2 font-bold border-base ;
 }
 </style>

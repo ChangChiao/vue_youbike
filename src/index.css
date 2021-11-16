@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-.title {
-    @apply font-bold leading-5 text-lg pb-2;
+@layer base {
+    input {
+        outline: none;
+        @apply bg-transparent border-0 text-gray-900;
+    }
+    button {
+        @apply cursor-pointer border-0 text-center bg-base text-white rounded-lg h-10;
+    }
+    select {
+        @apply border-solid  border-base border rounded-lg px-2;
+    }
+    option{
+        @apply text-center;
+    }
+    h1 {
+        @apply text-base text-lg;
+    }
+
 }
+
+@layer components {
+    .input-box {
+       @apply flex items-center border-solid border-base border pl-3 rounded-lg;
+    }
+}
+
