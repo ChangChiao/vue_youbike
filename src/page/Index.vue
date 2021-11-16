@@ -1,7 +1,7 @@
 <template>
     <div class="cover relative bg-blue">
         <div class="search w-96 ml-40 pt-12">
-            <img class="w-60" src="images/logo.png" alt="">
+            <img class="w-60" src="/images/logo.png" alt="">
             <p class=" text-3xl text-base font-extrabold">尋找單車,</p>
             <p class=" text-3xl text-base font-extrabold">來場悠閒的放鬆之旅！</p>
             <div class="input-box py-2 mt-10">
@@ -21,7 +21,7 @@
                 <button @click="search" class="ml-2 w-1/2">搜尋</button>
             </div>
         </div>
-        <img class="fixed bottom-60" src="images/illustration.png" />
+        <img class="fixed bottom-60" src="/images/illustration.png" />
     </div>
 </template>
 
@@ -60,7 +60,7 @@ export default {
     .cover:after {
         content: "";
         position: absolute;
-        background-image: url("images/Vector1.svg");
+        background-image: url("/images/Vector1.svg");
         background-repeat: no-repeat;
         background-size: contain;
         width: 300px;
@@ -71,7 +71,7 @@ export default {
     .cover:before {
         content: "";
         position: absolute;
-        background-image: url("images/Vector.svg");
+        background-image: url("/images/Vector.svg");
         background-repeat: no-repeat;
         background-size: contain;
         width: 400px;

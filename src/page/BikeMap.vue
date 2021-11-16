@@ -32,7 +32,7 @@ export default {
         console.log("getNearByInfo", longitude, latitude);
         const sendData = {
             city: data.city,
-            filter: `contains(StationAddress.Zh_tw,'${data.keyword}') or contains(StationName.Zh_tw,'${data.keyword}')`,
+            filter: data.keyword ? `contains(StationAddress.Zh_tw,'${data.keyword}') or contains(StationName.Zh_tw,'${data.keyword}')`:"",
             $spatialFilter: `nearby(${latitude},${longitude},${500})`
         }
         try {
