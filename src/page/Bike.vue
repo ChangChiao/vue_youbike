@@ -6,6 +6,7 @@
             @mapReady="mapReady"
         />
         <bike-list
+            @search="search"
             @setView="setView"
             @updateCity="updateCity"
             @updateKeyword="updateKeyword"
@@ -69,6 +70,10 @@ export default {
             } else {
                 getNowPos();
             }
+        };
+
+        const search = () => {
+            getBikeStationInfo();
         };
 
         const stationList = reactive([]);
@@ -202,14 +207,11 @@ export default {
             console.log("singlePageList", singlePageList);
             mapInstance.value.drawMark();
             const first = singlePageList[0];
-            setView({
-                latitude: first?.StationPosition?.PositionLat,
-                longitude: first?.StationPosition?.PositionLon
-            });
+            setView(first);
         };
 
-        const setView = ({ latitude, longitude }) => {
-            mapInstance.value.setView(latitude, longitude);
+        const setView = (obj) => {
+            mapInstance.value.setView(obj);
         };
 
         onMounted(() => {
@@ -226,7 +228,8 @@ export default {
             updateCity,
             singlePageList,
             updateKeyword,
-            setView
+            setView,
+            search
         };
     }
 };

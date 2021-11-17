@@ -60,8 +60,32 @@ export default {
                 .openPopup();
         };
 
-        const setView = (latitude, longitude) => {
-            map.setView([latitude, longitude], 18);
+        const setView = (item) => {
+            let { PositionLat, PositionLon } = item.StationPosition;
+            let {
+                AvailableRentBikes,
+                AvailableReturnBikes,
+                UpdateTime,
+                StationName,
+                StationAddress
+            } = item;
+            cleanMarker();
+            // map.setView([latitude, longitude], 18).openPopup();
+            // setTimeout(() => {
+            map.setView([PositionLat, PositionLon], 20);
+            L.popup()
+                .setLatLng([PositionLat, PositionLon])
+                .setContent(
+                    `
+                <h2 class="title">${StationName.Zh_tw}</h2>
+                <h4>更新時間:${transTime(UpdateTime)}</h4>
+                <h4>地址:${StationAddress.Zh_tw}</h4>
+                <h4>可借單車:${AvailableRentBikes}</h4>
+                <h4>可停車位:${AvailableReturnBikes}</h4>
+                <a target="_blank" href='https://www.google.com/maps/search/?api=1&query=${PositionLat},${PositionLon}'>在google map上查看</a>`
+                )
+                .openOn(map);
+            // }, 1000)
         };
 
         const createMark = () => {
@@ -112,13 +136,6 @@ export default {
                     AvailableRentBikes > 0 ? markAvailable : markNoAvailable;
                 markLayer.addLayer(
                     L.marker([PositionLat, PositionLon], { icon: mark })
-                        .bindPopup(`
-                <h2 class="title">${StationName.Zh_tw}</h2>
-                <h4>更新時間:${transTime(UpdateTime)}</h4>
-                <h4>地址:${StationAddress.Zh_tw}</h4>
-                <h4>可借單車:${AvailableRentBikes}</h4>
-                <h4>可停車位:${AvailableReturnBikes}</h4>
-                <a target="_blank" href='https://www.google.com/maps/search/?api=1&query=${PositionLat},${PositionLon}'>在google map上查看</a>`)
                 );
             });
             map.addLayer(markLayer);

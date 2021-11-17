@@ -1,10 +1,24 @@
 <template>
-    <div class="h-full w-96 px-8 fixed left-0 top-0 z-20 pt-24  overflow-hidden bg-white">
+    <div
+        class="
+            h-full
+            w-96
+            px-8
+            fixed
+            left-0
+            top-0
+            z-20
+            pt-24
+            overflow-hidden
+            bg-white
+        "
+    >
         <div class="rounded-xl shadow-lg overflow-hidden">
             <div class="h-8 bg-base"></div>
             <div class="p-4">
                 <h1 class="text-3xl font-bold mb-6">尋找單車</h1>
                 <Search
+                    @search="search"
                     @updateCity="updateCity"
                     @updateKeyword="updateKeyword"
                     :city="city"
@@ -13,16 +27,20 @@
             </div>
         </div>
         <div class="h-3/4 overflow-y-scroll">
-            <ul class="pt-8 ">
+            <ul class="pt-8">
                 <li
                     v-for="item in singlePageList"
                     class="bg-grey-100 rounded-xl mb-3 px-2 py-4 cursor-pointer"
                     :key="item.StationUID"
-                    @click="setView(item.StationPosition)"
+                    @click="setView(item)"
                 >
-                    <h3 class="text-xl font-bold">{{ item.StationName.Zh_tw }}</h3>
-                    <h4><font-awesome-icon icon="phone" />
-                        {{ item.StationAddress.Zh_tw }}</h4>
+                    <h3 class="text-xl font-bold">
+                        {{ item.StationName.Zh_tw }}
+                    </h3>
+                    <h4>
+                        <font-awesome-icon icon="map-marker-alt" />
+                        {{ item.StationAddress.Zh_tw }}
+                    </h4>
                     <p class="py-2">
                         <span
                             :class="
@@ -79,13 +97,10 @@ export default {
             default: ""
         }
     },
-    emits: ["setView", "updateKeyword", "updateCity"],
+    emits: ["setView", "updateKeyword", "updateCity", "search"],
     setup(props, { emit }) {
         const setView = (obj) => {
-            emit("setView", {
-                latitude: obj.PositionLat,
-                longitude: obj.PositionLon
-            });
+            emit("setView", obj);
         };
         const updateKeyword = (val) => {
             emit("updateKeyword", val);
@@ -93,10 +108,14 @@ export default {
         const updateCity = (val) => {
             emit("updateCity", val);
         };
+        const search = () => {
+            emit("search");
+        };
         return {
             setView,
             updateCity,
-            updateKeyword
+            updateKeyword,
+            search
         };
     }
 };

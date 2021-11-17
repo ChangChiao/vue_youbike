@@ -1,6 +1,6 @@
 <template>
     <div class="input-box py-2">
-        <BootstrapIcon icon="search" size="lg" flip-v />
+        <font-awesome-icon class="text-gray-500" icon="search" />
         <input
             class="w-1/2 pl-4"
             placeholder="輸入關鍵字"

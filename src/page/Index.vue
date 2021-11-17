@@ -6,7 +6,6 @@
             <p class="text-3xl text-base font-extrabold">
                 來場悠閒的放鬆之旅！
             </p>
-            <font-awesome-icon icon="map-marker-alt" />
             <Search
                 @updateCity="updateCity"
                 @updateKeyword="updateKeyword"

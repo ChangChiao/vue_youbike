@@ -38,12 +38,6 @@
   version "7.15.8"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.15.8.tgz#7bacdcbe71bdc3ff936d510c15dcea7cf0b99016"
 
-"@dvuckovic/vue3-bootstrap-icons@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@dvuckovic/vue3-bootstrap-icons/-/vue3-bootstrap-icons-1.0.4.tgz#d563daff4b4ef4b2ea9a07f5084e08cead15082b"
-  dependencies:
-    bootstrap-icons "^1.4.1"
-
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.4.3.tgz#9e42981ef035beb3dd49add17acb96e8ff6f394c"
@@ -354,10 +348,6 @@ balanced-match@^1.0.0:
 binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
-
-bootstrap-icons@^1.4.1:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/bootstrap-icons/-/bootstrap-icons-1.7.0.tgz#856afbfe35287a71638d9a1b96f67faf72bbb1b6"
 
 brace-expansion@^1.1.7:
   version "1.1.11"
