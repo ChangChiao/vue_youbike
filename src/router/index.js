@@ -1,29 +1,29 @@
-import { createRouter, createWebHashHistory} from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Index from "../page/Index.vue";
-import RouteMap from "../page/RouteMap.vue";
-import BikeMap from "../page/BikeMap.vue";
+import Route from "../page/Route.vue";
+import Bike from "../page/Bike.vue";
 
 const routes = [
     {
         path: "/",
         name: "Index",
-        component: Index,
+        component: Index
     },
     {
-        path: "/routemap",
-        name: "RouteMap",
-        component: RouteMap,
+        path: "/route",
+        name: "Route",
+        component: Route
     },
     {
-        path: "/bikemap",
-        name: "BikeMap",
-        component: BikeMap,
+        path: "/bike",
+        name: "Bike",
+        component: Bike
     }
 ];
 
 const router = createRouter({
     history: createWebHashHistory(),
-    routes,
+    routes
 });
 
 export default router;

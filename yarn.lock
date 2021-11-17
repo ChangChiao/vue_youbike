@@ -72,9 +72,33 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fortawesome/fontawesome-common-types@^0.2.36":
+  version "0.2.36"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.36.tgz#b44e52db3b6b20523e0c57ef8c42d315532cb903"
+
+"@fortawesome/fontawesome-svg-core@^1.2.36":
+  version "1.2.36"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.2.36.tgz#4f2ea6f778298e0c47c6524ce2e7fd58eb6930e3"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.36"
+
+"@fortawesome/free-solid-svg-icons@^5.15.4":
+  version "5.15.4"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.15.4.tgz#2a68f3fc3ddda12e52645654142b9e4e8fbb6cc5"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.36"
+
+"@fortawesome/vue-fontawesome@^3.0.0-5":
+  version "3.0.0-5"
+  resolved "https://registry.yarnpkg.com/@fortawesome/vue-fontawesome/-/vue-fontawesome-3.0.0-5.tgz#6251e6917198362fa56510eb256cfb6aa6d30a32"
+
 "@headlessui/vue@^1.4.2":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@headlessui/vue/-/vue-1.4.2.tgz#1098f52cb6c583772708a980b3487222ac0ae65e"
+
+"@hennge/vue3-pagination@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@hennge/vue3-pagination/-/vue3-pagination-1.0.17.tgz#86169294c4fe343b22523e4a2d0e25bf91c61708"
 
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
@@ -1670,6 +1694,10 @@ vue-router@^4.0.12:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.0.12.tgz#8dc792cddf5bb1abcc3908f9064136de7e13c460"
   dependencies:
     "@vue/devtools-api" "^6.0.0-beta.18"
+
+vue-toast-notification@^2.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vue-toast-notification/-/vue-toast-notification-2.0.1.tgz#5fe607c493b5dc9b238bf49bc3bcf80366edd4e4"
 
 vue@^3.2.16:
   version "3.2.20"

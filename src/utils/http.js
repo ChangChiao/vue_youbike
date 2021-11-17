@@ -1,25 +1,30 @@
-import axios from 'axios';
+import axios from "axios";
+import { showToast } from "../utils/common";
 
-
-const service = axios.create();
+const service = axios.create({});
 
 service.interceptors.request.use(
-    config => {
-        return config
+    (config) => {
+        let params = config.params;
+        Object.keys(params).map((vo) => {
+            if (!params[vo]) delete params[vo];
+        });
+        return config;
     },
-    error => {
-        return error
+    (error) => {
+        return error;
     }
-)
+);
 
 service.interceptors.response.use(
-    response => {
-        return response.data
+    (response) => {
+        return response.data;
     },
-    error=>{
-        return Promise.reject(error)
+    (error) => {
+        const { status } = error.response;
+        showToast(`error--${status}`, "error");
+        return Promise.reject(error);
     }
-)
-
+);
 
 export default service;

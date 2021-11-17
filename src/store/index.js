@@ -5,13 +5,13 @@ import VuexPersistence from "vuex-persist";
 const vuexLocal = new VuexPersistence({
     storage: window.localStorage,
     reducer: (state) => ({
-        myPlatformId: state.myPlatformId,
-    }),
+        myPlatformId: state.myPlatformId
+    })
 });
 
 const initialState = () => {
     return {
-        config: {},
+        config: {}
     };
 };
 
@@ -20,9 +20,9 @@ export default createStore({
     mutations: {
         updBeep(state, data) {
             state.beep = data;
-        },
+        }
     },
     actions,
     plugins: [vuexLocal.plugin],
-    modules: {},
+    modules: {}
 });
