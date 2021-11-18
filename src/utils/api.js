@@ -28,7 +28,7 @@ const getAuthorizationHeader = () => {
 };
 
 const getCity = (data) => {
-    const { city = "" } = data;
+    const { city } = data;
     delete data.city;
     return { cityPath: city, data };
 };

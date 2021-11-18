@@ -27,8 +27,7 @@
                 />
             </div>
         </div>
-        <div class="h-3/4 overflow-y-scroll mt-8 mb-4">
-        {{singlePageList}}
+        <div class="h-2/3 overflow-y-scroll mt-8 mb-4">
             <ul class="">
                 <li
                     v-for="item in singlePageList"
@@ -72,7 +71,7 @@
 import Pagination from "../components/Pagination.vue";
 import Search from "../components/Search.vue";
 import { transType } from "../utils/common";
-import { watch } from 'vue'
+import { watch } from "vue";
 export default {
     components: {
         Pagination,
@@ -107,9 +106,9 @@ export default {
             emit("search");
         };
 
-        watch("singlePageList", ()=>{
-            console.warn("change~~", singlePageList)
-        })
+        watch("singlePageList", () => {
+            console.warn("change~~", singlePageList);
+        });
         return {
             setView,
             updateCity,

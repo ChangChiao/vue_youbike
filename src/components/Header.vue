@@ -12,7 +12,12 @@
             h-20
         "
     >
-        <img class="w-20" src="/images/logo.png" alt="" @click="goHome" />
+        <img
+            class="w-20 cursor-pointer"
+            src="/images/logo.png"
+            alt=""
+            @click="goHome"
+        />
         <ul class="menu flex">
             <li
                 v-for="item in menuList"

@@ -30,7 +30,7 @@
     }
 
     .status {
-        @apply rounded-lg h-4 w-8 border mr-4 p-1;
+        @apply rounded-md h-4 w-8 border mr-4 p-1;
     }
     .available {
         @apply status border-primary-500 bg-primary-100;
@@ -49,4 +49,8 @@
 
 .leaflet-popup-content-wrapper {
     @apply border-primary-500 border;
+}
+
+.rent-info p {
+    margin: 5px 0;
 }

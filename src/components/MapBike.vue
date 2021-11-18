@@ -9,7 +9,7 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster/dist/leaflet.markercluster";
 import { onMounted, onBeforeUnmount } from "vue";
-import { transType } from "../utils/common";
+import { transType, transTime } from "../utils/common";
 export default {
     props: {
         singlePageList: {
@@ -82,13 +82,14 @@ export default {
                 <h3 class="text-xl font-bold">
                     ${StationName.Zh_tw}
                 </h3>
-                <h4>
+                <h4 class="pt-2 text-sm">
+                    <span v-html='<font-awesome-icon icon="map-marker-alt" />'></span>
                     <font-awesome-icon icon="map-marker-alt" />
                     ${StationAddress.Zh_tw}
                 </h4>
-                <p>${transTime(UpdateTime)}</p>
+                <p class="text-sm">${transTime(UpdateTime)}</p>
                 <p class="py-2">
-                    <span class="${transType(ServiceStatus, 'color')}">
+                    <span class="${transType(ServiceStatus, "color")}">
                         ${transType(ServiceStatus, "type")}
                     </span>
                     <span
@@ -103,16 +104,16 @@ export default {
                             ${AvailableRentBikes > 0 ? "尚有單車" : "已無單車"}
                         </span>
                 </p>
-                <div class="flex items-center justify-between">
-                    <div class="w-1/2 rounded-md border-primary-500 mr-4 text-center py-2 border">
-                        <p class="font-bold text-primary-500 text-xl">可借單車</p>
-                        <p class="font-bold text-xl">
+                <div class="rent-info flex items-center justify-between">
+                    <div class="w-1/2 h-24 flex flex-col justify-center rounded-md border-primary-500 mr-4 text-center border">
+                        <p class="font-bold my-1 text-primary-500 text-base">可借單車</p>
+                        <p class="font-bold text-2xl">
                             ${AvailableRentBikes}
                         </p>
                     </div>
-                    <div class="w-1/2 rounded-md border-primary-500 text-center py-2 border">
-                        <p class="font-bold text-primary-500 text-xl">可停空位</p>
-                        <p class="font-bold text-xl">
+                    <div class="w-1/2 h-24 flex flex-col justify-center rounded-md border-primary-500 text-center border">
+                        <p class="font-bold text-primary-500 text-base">可停空位</p>
+                        <p class="font-bold text-2xl">
                             ${AvailableReturnBikes}
                         </p>
                     </div>
@@ -149,21 +150,18 @@ export default {
             });
         };
 
-        const transTime = (time) => {
-            let date = new Date(time);
-            return date.toString("Zh_tw");
-        };
-
         const drawMark = () => {
-            // cleanMarker()
+            cleanMarker();
             console.log("drawMark", props.singlePageList);
             props.singlePageList.forEach((item) => {
                 let { PositionLat, PositionLon } = item.StationPosition;
+                console.log("878787", PositionLat, PositionLon);
                 let { AvailableRentBikes } = item;
-                const mark =
+                const marker =
                     AvailableRentBikes > 0 ? markAvailable : markNoAvailable;
                 markLayer.addLayer(
-                    L.marker([PositionLat, PositionLon], { icon: mark })
+                    // L.marker([PositionLon, PositionLat], { icon: marker })
+                    L.marker([PositionLat, PositionLon], { icon: marker })
                 );
             });
             map.addLayer(markLayer);
@@ -183,7 +181,8 @@ export default {
             drawSelfMark,
             drawMark,
             setView,
-            transType
+            transType,
+            transTime
         };
     }
 };

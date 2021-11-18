@@ -12,7 +12,7 @@ export const showToast = (msg, type = "success") => {
 
 export const transTime = (string) => {
     let date = new Date(string);
-    return moment(date).format('YYYY-MM-DDTHH:mm:ss');
+    return moment(date).format("YYYY-MM-DD HH:mm:ss");
 };
 
 export const transType = (status, type) => {

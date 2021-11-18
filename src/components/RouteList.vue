@@ -27,13 +27,13 @@
                 />
             </div>
         </div>
-        <div class="h-3/4 overflow-y-scroll mt-8">
+        <div class="h-2/3 overflow-y-scroll mt-8 mb-4">
             <ul class="">
                 <li
                     v-for="item in singlePageList"
                     class="bg-grey-100 rounded-xl mb-3 px-2 py-4 cursor-pointer"
                     :key="item.StationUID"
-                    @click="setView(item)"
+                    @click="drawLine(item.Geometry)"
                 >
                     <h3 class="text-xl font-bold pb-2">
                         {{ item.RouteName }}
@@ -43,7 +43,7 @@
                             class="text-primary-500"
                             icon="map-marker-alt"
                         />
-                        {{ `${item.City} ${item.Town}` }}
+                        {{ `${item.City}` }}
                     </h4>
                     <p>
                         <span class="mr-8"
@@ -99,8 +99,8 @@ export default {
     },
     emits: ["setView", "updateKeyword", "updateCity", "search"],
     setup(props, { emit }) {
-        const setView = (obj) => {
-            emit("setView", obj);
+        const drawLine = (Geometry) => {
+            emit("drawLine", Geometry);
         };
         const updateKeyword = (val) => {
             emit("updateKeyword", val);
@@ -112,7 +112,7 @@ export default {
             emit("search");
         };
         return {
-            setView,
+            drawLine,
             updateCity,
             updateKeyword,
             search

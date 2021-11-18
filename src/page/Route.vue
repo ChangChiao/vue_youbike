@@ -1,7 +1,7 @@
 <template>
-    {{ routeDataList }}
     <map-route
         ref="mapInstance"
+        :city="city"
         :singlePageList="singlePageList"
         @getRoute="getRoute"
     />
@@ -93,10 +93,6 @@ export default {
             // mapInstance.value.drawMark();
             const first = singlePageList[0];
             drawLine(first.Geometry);
-            // setView({
-            //     latitude: first?.StationPosition?.PositionLat,
-            //     longitude: first?.StationPosition?.PositionLat
-            // });
         };
 
         onMounted(() => {});

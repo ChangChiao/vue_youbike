@@ -1,63 +1,5 @@
 <template>
     <div id="map_route" class="map w-screen relative z-10"></div>
-    <!-- <div>
-        <h3 class="text-xl font-bold">
-            {{ item.StationName.Zh_tw }}
-        </h3>
-        <h4>
-            <font-awesome-icon icon="map-marker-alt" />
-            {{ item.StationAddress.Zh_tw }}
-        </h4>
-        <p>{{ transTime(item.UpdateTime) }}</p>
-        <p class="py-2">
-            <span
-                :class="
-                    item.AvailableRentBikes > 0 ? 'available' : 'no-available'
-                "
-                >{{
-                    item.AvailableRentBikes > 0 ? "尚有單車" : "已無單車"
-                }}</span
-            >
-            <span
-                :class="item.AvailableReturnBikes > 0 ? 'available' : 'no-rent'"
-                >{{
-                    item.AvailableReturnBikes > 0 ? "尚可還車" : "已無車位"
-                }}</span
-            >
-        </p>
-        <div class="flex items-center justify-between">
-            <div
-                class="
-                    w-2/5
-                    rounded-md
-                    border-primary-500
-                    text-center
-                    py-2
-                    boder
-                "
-            >
-                <p class="font-bold text-primary-500">可借單車</p>
-                <p class="font-bold text-xl">
-                    {{ item.AvailableReturnBikes || 2 }}
-                </p>
-            </div>
-            <div
-                class="
-                    w-2/5
-                    rounded-md
-                    border-primary-500
-                    text-center
-                    py-2
-                    boder
-                "
-            >
-                <p class="font-bold text-primary-500">可停空位</p>
-                <p class="font-bold text-xl">
-                    {{ item.AvailableReturnBikes || 2 }}
-                </p>
-            </div>
-        </div>
-    </div> -->
 </template>
 
 <script>
@@ -66,11 +8,16 @@ import L from "leaflet";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster/dist/leaflet.markercluster";
-import { transTime } from "../utils/common";
 import { getRestaurant, getSpot } from "../utils/api";
 import * as Wkt from "wicket";
 import { onMounted, onBeforeUnmount } from "vue";
 export default {
+    props: {
+        city: {
+            type: String,
+            default: ""
+        }
+    },
     emits: ["getRoute"],
     setup(props, { emit }) {
         let map = null;
@@ -119,14 +66,14 @@ export default {
             routeLayer.addLayer(L.marker([start[1], start[0]], { icon: mark }));
             routeLayer.addLayer(L.marker([end[1], end[0]], { icon: mark }));
             map.addLayer(routeLayer);
-            getSpotData(start[0], start[1]);
-            getRestaurantData(start[0], start[1]);
+            getSpotData(start[1], start[0]);
+            getRestaurantData(start[1], start[0]);
         };
 
-        const drawOtherInfo = (type, arr) => {
+        const drawOtherInfo = (arr, type) => {
             const posData = arr.map((vo) => vo.Position);
             posData.forEach((item) => {
-                const { PositionLon, PositionLat } = item.Position;
+                const { PositionLon, PositionLat } = item;
                 let marks = type === "food" ? markFood : markSpot;
                 routeLayer.addLayer(
                     L.marker([PositionLat, PositionLon], { icon: marks })
@@ -137,6 +84,7 @@ export default {
 
         const getSpotData = async (latitude, longitude) => {
             const sendData = {
+                city: props.city,
                 $spatialFilter: `nearby(${latitude},${longitude},${500})`
             };
             try {
@@ -147,9 +95,13 @@ export default {
             }
         };
 
-        const getRestaurantData = async () => {
+        const getRestaurantData = async (latitude, longitude) => {
             try {
-                const result = await getRestaurant();
+                const sendData = {
+                    city: props.city,
+                    $spatialFilter: `nearby(${latitude},${longitude},${500})`
+                };
+                const result = await getRestaurant(sendData);
                 drawOtherInfo(result, "food");
             } catch (error) {
                 console.log("error", error);

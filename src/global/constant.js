@@ -6,8 +6,8 @@ export const API_SHAPE = API_URL + "/Cycling/Shape";
 export const API_NEAYBY_STATION = API_URL + "/Bike/Station/NearBy";
 export const API_NEAYBY_AVAILABLE = API_URL + "/Bike/Availability/NearBy";
 //spot
-export const API_SPOT = API_URL + "/ScenicSpot";
-export const API_RESTAURANT = API_URL + "/Restaurant";
+export const API_SPOT = API_URL + "/Tourism/ScenicSpot";
+export const API_RESTAURANT = API_URL + "/Tourism/Restaurant";
 export const CITY_LIST = [
     { label: "臺北市", value: "Taipei" },
     { label: "新北市", value: "NewTaipei" },
