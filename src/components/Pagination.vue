@@ -1,8 +1,8 @@
 <template>
     <v-pagination
-        :modelValue="page"
+        :v-model="page"
         :pages="totalPage"
-        :range-size="30"
+        :range-size="1"
         active-color="#DCEDFF"
         @update:modelValue="updateHandler"
     />

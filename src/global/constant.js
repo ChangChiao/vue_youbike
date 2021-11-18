@@ -1,9 +1,13 @@
 export const API_URL = "https://ptx.transportdata.tw/MOTC/v2";
+//bike
 export const API_STATION = API_URL + "/Bike/Station";
 export const API_AVAILABLE = API_URL + "/Bike/Availability";
 export const API_SHAPE = API_URL + "/Cycling/Shape";
 export const API_NEAYBY_STATION = API_URL + "/Bike/Station/NearBy";
 export const API_NEAYBY_AVAILABLE = API_URL + "/Bike/Availability/NearBy";
+//spot
+export const API_SPOT = API_URL + "/ScenicSpot";
+export const API_RESTAURANT = API_URL + "/Restaurant";
 export const CITY_LIST = [
     { label: "臺北市", value: "Taipei" },
     { label: "新北市", value: "NewTaipei" },
@@ -11,20 +15,20 @@ export const CITY_LIST = [
     { label: "臺中市", value: "Taichung" },
     { label: "臺南市", value: "Tainan" },
     { label: "高雄市", value: "Kaohsiung" },
-    { label: "基隆市", value: "Keelung" },
-    { label: "新竹市", value: "Hsinchu" },
-    { label: "新竹縣", value: "HsinchuCounty" },
+    // { label: "基隆市", value: "Keelung" },
+    // { label: "新竹市", value: "Hsinchu" },
+    // { label: "新竹縣", value: "HsinchuCounty" },
     { label: "苗栗縣", value: "MiaoliCounty" },
-    { label: "彰化縣", value: "ChanghuaCounty" },
-    { label: "南投縣", value: "NantouCounty" },
-    { label: "雲林縣", value: "YunlinCounty" },
-    { label: "嘉義縣", value: "ChiayiCounty" },
+    // { label: "彰化縣", value: "ChanghuaCounty" },
+    // { label: "南投縣", value: "NantouCounty" },
+    // { label: "雲林縣", value: "YunlinCounty" },
+    // { label: "嘉義縣", value: "ChiayiCounty" },
     { label: "嘉義市", value: "Chiayi" },
     { label: "屏東縣", value: "PingtungCounty" },
-    { label: "宜蘭縣", value: "YilanCounty" },
-    { label: "花蓮縣", value: "HualienCounty" },
-    { label: "臺東縣", value: "TaitungCounty" },
-    { label: "金門縣", value: "KinmenCounty" },
-    { label: "澎湖縣", value: "PenghuCounty" },
-    { label: "連江縣", value: "LienchiangCounty" }
+    // { label: "宜蘭縣", value: "YilanCounty" },
+    // { label: "花蓮縣", value: "HualienCounty" },
+    // { label: "臺東縣", value: "TaitungCounty" },
+    { label: "金門縣", value: "KinmenCounty" }
+    // { label: "澎湖縣", value: "PenghuCounty" },
+    // { label: "連江縣", value: "LienchiangCounty" }
 ];

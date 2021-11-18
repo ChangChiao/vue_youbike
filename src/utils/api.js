@@ -4,7 +4,9 @@ import {
     API_AVAILABLE,
     API_SHAPE,
     API_NEAYBY_STATION,
-    API_NEAYBY_AVAILABLE
+    API_NEAYBY_AVAILABLE,
+    API_SPOT,
+    API_RESTAURANT
 } from "../global/constant";
 import jsSHA from "jssha";
 
@@ -82,4 +84,27 @@ export const getNearAvailble = (data) => {
         }
     };
     return api.get(API_NEAYBY_AVAILABLE, config);
+};
+
+//spot
+export const getRestaurant = (sendData) => {
+    const { cityPath, data } = getCity(sendData);
+    let config = {
+        headers: getAuthorizationHeader(),
+        params: {
+            ...data
+        }
+    };
+    return api.get(API_RESTAURANT + `/${cityPath}`, config);
+};
+
+export const getSpot = (sendData) => {
+    const { cityPath, data } = getCity(sendData);
+    let config = {
+        headers: getAuthorizationHeader(),
+        params: {
+            ...data
+        }
+    };
+    return api.get(API_SPOT + `/${cityPath}`, config);
 };

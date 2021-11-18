@@ -12,13 +12,11 @@
             h-20
         "
     >
-        <router-link to="/">
-            <img class="w-20" src="/images/logo.png" alt="" />
-        </router-link>
+        <img class="w-20" src="/images/logo.png" alt="" @click="goHome" />
         <ul class="menu flex">
             <li
                 v-for="item in menuList"
-                class="mx-3 text-lg text-base"
+                class="mx-3 text-lg text-primary-500"
                 :key="item.path"
             >
                 <router-link :to="item.path" class="duration-200">
@@ -30,15 +28,21 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 export default {
     setup() {
+        const router = useRouter();
         const menuList = [
-            { title: "尋找單車", path: "/bikemap" },
-            { title: "尋找車道", path: "/routemap" }
+            { title: "尋找單車", path: "/bike" },
+            { title: "尋找車道", path: "/route" }
         ];
+        const goHome = () => {
+            router.push("/");
+        };
 
         return {
-            menuList
+            menuList,
+            goHome
         };
     }
 };
@@ -52,6 +56,6 @@ header {
     font-size: 22px;
     color: red;
     background: transparent;
-    @apply text-base border-b-2 font-bold border-base;
+    @apply text-primary-500 border-b-2 font-bold border-primary-500;
 }
 </style>

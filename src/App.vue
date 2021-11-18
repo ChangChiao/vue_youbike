@@ -1,23 +1,31 @@
 <template>
     <Header />
     <router-view />
+    <loading :showLoading="showLoading" />
 </template>
 
 <script>
 import Header from "./components/Header.vue";
+import Loading from "./components/Loading.vue";
+import { provide, ref } from "vue";
 // import Template from "./components/Template.vue"
 export default {
     components: {
         // Template
+        Loading,
         Header
     },
-    setup() {}
+    setup() {
+        const showLoading = ref(false);
+        const setShowLoading = (boolean) => {
+            showLoading.value = boolean;
+        };
+        provide("setShowLoading", setShowLoading);
+        return {
+            showLoading
+        };
+    }
 };
-</script>
-
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 </script>
 
 <style>

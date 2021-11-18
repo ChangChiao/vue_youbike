@@ -8,29 +8,32 @@
         @apply bg-transparent border-0 text-gray-900;
     }
     button {
-        @apply cursor-pointer border-0 text-center bg-base text-white rounded-lg h-10;
+        @apply cursor-pointer border-0 text-center bg-primary-500 text-white rounded-lg h-10;
     }
     select {
-        @apply border-solid text-base  border-base border rounded-lg px-2;
+        @apply border-solid text-primary-500  border-primary-500 border rounded-lg px-2;
     }
     option {
         @apply text-center;
     }
     h1 {
-        @apply text-base text-lg;
+        @apply text-primary-500 text-lg;
     }
 }
 
 @layer components {
+    .sub-title {
+        @apply text-primary-500 text-lg font-bold pr-2;
+    }
     .input-box {
-        @apply flex items-center border-solid border-base border pl-3 rounded-lg;
+        @apply flex items-center border-solid border-primary-500 border pl-3 rounded-lg;
     }
 
     .status {
         @apply rounded-lg h-4 w-8 border mr-4 p-1;
     }
     .available {
-        @apply status border-base bg-primary-300 text-base;
+        @apply status border-primary-500 bg-primary-100;
     }
     .no-available {
         @apply status border-red-500 text-red-500 bg-red-100;
@@ -38,4 +41,12 @@
     .no-rent {
         @apply status border-orange-500 text-orange-500 bg-orange-100;
     }
+}
+
+.map {
+    height: calc(100vh - 80px);
+}
+
+.leaflet-popup-content-wrapper {
+    @apply border-primary-500 border;
 }

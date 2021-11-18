@@ -1,5 +1,5 @@
 <template>
-    <div id="map" class="w-screen h-screen relative z-10"></div>
+    <div id="map" class="map w-screen relative z-10"></div>
 </template>
 
 <script>
@@ -9,6 +9,7 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster/dist/leaflet.markercluster";
 import { onMounted, onBeforeUnmount } from "vue";
+import { transType } from "../utils/common";
 export default {
     props: {
         singlePageList: {
@@ -67,7 +68,8 @@ export default {
                 AvailableReturnBikes,
                 UpdateTime,
                 StationName,
-                StationAddress
+                StationAddress,
+                ServiceStatus
             } = item;
             cleanMarker();
             // map.setView([latitude, longitude], 18).openPopup();
@@ -77,12 +79,44 @@ export default {
                 .setLatLng([PositionLat, PositionLon])
                 .setContent(
                     `
-                <h2 class="title">${StationName.Zh_tw}</h2>
-                <h4>更新時間:${transTime(UpdateTime)}</h4>
-                <h4>地址:${StationAddress.Zh_tw}</h4>
-                <h4>可借單車:${AvailableRentBikes}</h4>
-                <h4>可停車位:${AvailableReturnBikes}</h4>
-                <a target="_blank" href='https://www.google.com/maps/search/?api=1&query=${PositionLat},${PositionLon}'>在google map上查看</a>`
+                <h3 class="text-xl font-bold">
+                    ${StationName.Zh_tw}
+                </h3>
+                <h4>
+                    <font-awesome-icon icon="map-marker-alt" />
+                    ${StationAddress.Zh_tw}
+                </h4>
+                <p>${transTime(UpdateTime)}</p>
+                <p class="py-2">
+                    <span class="${transType(ServiceStatus, 'color')}">
+                        ${transType(ServiceStatus, "type")}
+                    </span>
+                    <span
+                        class="
+                            ${
+                                AvailableRentBikes > 0
+                                    ? "available"
+                                    : "no-available"
+                            }
+                        "
+                        >
+                            ${AvailableRentBikes > 0 ? "尚有單車" : "已無單車"}
+                        </span>
+                </p>
+                <div class="flex items-center justify-between">
+                    <div class="w-1/2 rounded-md border-primary-500 mr-4 text-center py-2 border">
+                        <p class="font-bold text-primary-500 text-xl">可借單車</p>
+                        <p class="font-bold text-xl">
+                            ${AvailableRentBikes}
+                        </p>
+                    </div>
+                    <div class="w-1/2 rounded-md border-primary-500 text-center py-2 border">
+                        <p class="font-bold text-primary-500 text-xl">可停空位</p>
+                        <p class="font-bold text-xl">
+                            ${AvailableReturnBikes}
+                        </p>
+                    </div>
+                </div> `
                 )
                 .openOn(map);
             // }, 1000)
@@ -125,13 +159,7 @@ export default {
             console.log("drawMark", props.singlePageList);
             props.singlePageList.forEach((item) => {
                 let { PositionLat, PositionLon } = item.StationPosition;
-                let {
-                    AvailableRentBikes,
-                    AvailableReturnBikes,
-                    UpdateTime,
-                    StationName,
-                    StationAddress
-                } = item;
+                let { AvailableRentBikes } = item;
                 const mark =
                     AvailableRentBikes > 0 ? markAvailable : markNoAvailable;
                 markLayer.addLayer(
@@ -154,8 +182,11 @@ export default {
         return {
             drawSelfMark,
             drawMark,
-            setView
+            setView,
+            transType
         };
     }
 };
 </script>
+
+<style lang="postcss" scoped></style>

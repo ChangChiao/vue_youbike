@@ -1,15 +1,18 @@
 <template>
+    {{ routeDataList }}
     <map-route
         ref="mapInstance"
-        :isSearchExist="isSearchExist"
         :singlePageList="singlePageList"
         @getRoute="getRoute"
     />
     <route-list
+        @search="search"
         @drawLine="drawLine"
         @updateCity="updateCity"
         @updateKeyword="updateKeyword"
         :singlePageList="singlePageList"
+        :keyword="keyword"
+        :city="city"
     />
 </template>
 
@@ -17,8 +20,9 @@
 import { provide } from "vue";
 import MapRoute from "../components/MapRoute.vue";
 import RouteList from "../components/RouteList.vue";
-import { onMounted, reactive, toRefs, ref, computed } from "vue";
+import { onMounted, reactive, toRefs, toRef, ref, computed } from "vue";
 import { getCyclingShape } from "../utils/api";
+import { CITY_LIST } from "../global/constant";
 export default {
     components: {
         MapRoute,
@@ -26,29 +30,36 @@ export default {
     },
     setup() {
         const mapInstance = ref(null);
-        const isSearchExist = computed(() => {
-            return data.keyword || data.city;
-        });
         const data = reactive({
             keyword: "",
-            city: "",
-            bikeRoute: "",
+            city: CITY_LIST[0].value,
             page: 1,
             totalPage: 1
         });
 
-        const routeList = reactive([]);
+        const updateCity = (city) => {
+            data.city = city;
+        };
+
+        const updateKeyword = (keyword) => {
+            data.keyword = keyword;
+        };
+
+        const routeDataList = reactive([]);
         const getRoute = async () => {
             const sendData = {
                 city: data.city
             };
             try {
                 const result = await getCyclingShape(sendData);
+                console.log("result", result);
                 if (result.length > 0) {
-                    Object.assign(routeList, result);
-                    data.bikeRoute = result[0].RouteName;
-                    data.totalPage = Math.ceil(routeList.length / 30);
+                    console.log("innnnn");
+                    Object.assign(routeDataList, result);
+                    // data.bikeRoute = result[0].RouteName;
+                    data.totalPage = Math.ceil(routeDataList.length / 30);
                     data.page = 1;
+                    setSinglePageList();
                 }
             } catch (error) {
                 console.log("error", error);
@@ -57,43 +68,48 @@ export default {
 
         const setPage = (num) => {
             data.page = num;
-            setsinglePageList();
+            setSinglePageList();
+        };
+
+        const search = () => {
+            getRoute();
         };
 
         const drawLine = (Geometry) => {
             mapInstance.value.drawLine(Geometry);
         };
 
-        provide("page", data.page);
+        provide("totalPage", toRef(data, "totalPage"));
+        provide("page", toRef(data, "page"));
         provide("setPage", setPage);
 
         const singlePageList = reactive([]);
 
-        const setsinglePageList = () => {
-            const arr = [...routeList];
+        const setSinglePageList = () => {
+            const arr = [...routeDataList];
             const startIndex = (data.page - 1) * 30;
-            const data = arr.splice(startIndex, 30);
-            Object.assign(singlePageList, data);
-            mapInstance.value.drawMark();
+            const spliceData = arr.splice(startIndex, 30);
+            Object.assign(singlePageList, spliceData);
+            // mapInstance.value.drawMark();
             const first = singlePageList[0];
-            setView({
-                latitude: first?.StationPosition?.PositionLat,
-                longitude: first?.StationPosition?.PositionLat
-            });
-        };
-
-        const setView = ({ latitude, longitude }) => {
-            mapInstance.value.setView(latitude, longitude);
+            drawLine(first.Geometry);
+            // setView({
+            //     latitude: first?.StationPosition?.PositionLat,
+            //     longitude: first?.StationPosition?.PositionLat
+            // });
         };
 
         onMounted(() => {});
 
         return {
             ...toRefs(data),
-            isSearchExist,
+            updateCity,
+            updateKeyword,
+            singlePageList,
             getRoute,
             mapInstance,
-            drawLine
+            drawLine,
+            search
         };
     }
 };

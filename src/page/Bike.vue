@@ -18,17 +18,17 @@
 </template>
 
 <script>
-import { provide } from "vue";
 import { useRoute } from "vue-router";
 import MapBike from "../components/MapBike.vue";
 import BikeList from "../components/BikeList.vue";
+import { CITY_LIST } from "../global/constant";
 import {
     getNearStation,
     getNearAvailble,
     getBikeStation,
     getBikeAvailability
 } from "../utils/api";
-import { onMounted, reactive, toRefs, ref, computed, onUnmounted } from "vue";
+import { onMounted, inject, provide, reactive, toRefs, toRef, ref } from "vue";
 export default {
     components: {
         MapBike,
@@ -39,13 +39,9 @@ export default {
         const route = useRoute();
         const data = reactive({
             keyword: "",
-            city: "",
+            city: CITY_LIST[0].value,
             page: 1,
             totalPage: 1
-        });
-        const isSearchExist = computed(() => {
-            console.log(Boolean(data.keyword || data.city), "isexist-com[uted");
-            return Boolean(data.keyword || data.city);
         });
 
         const updateCity = (city) => {
@@ -68,10 +64,16 @@ export default {
             if (queryCity || queryKeyword) {
                 getBikeStationInfo();
             } else {
+                console.log("getNowPos!!!");
                 getNowPos();
             }
         };
 
+        const setShowLoading = inject("setShowLoading");
+        console.log("setShowLoading--inject", setShowLoading);
+        const controlShowLoading = (boolean) => {
+            setShowLoading(boolean);
+        };
         const search = () => {
             getBikeStationInfo();
         };
@@ -117,6 +119,7 @@ export default {
         const availableList = reactive([]);
 
         const getBikeAvailble = async () => {
+            controlShowLoading(true);
             const sendData = {
                 city: data.city,
                 $filter: data.keyword
@@ -138,13 +141,15 @@ export default {
                 console.log("availableList", availableList);
                 data.totalPage = Math.ceil(availableList.length / 30);
                 data.page = 1;
-                setsinglePageList();
+                setSinglePageList();
             } catch (error) {
                 console.log("error", error);
             }
+            controlShowLoading(false);
         };
 
         const getNearByAvailble = async (longitude, latitude) => {
+            controlShowLoading(true);
             const sendData = {
                 $spatialFilter: `nearby(${latitude},${longitude},${500})`
             };
@@ -163,10 +168,11 @@ export default {
                 console.log("availableList", availableList);
                 data.totalPage = Math.ceil(availableList.length / 30);
                 data.page = 1;
-                setsinglePageList();
+                setSinglePageList();
             } catch (error) {
                 console.log("error", error);
             }
+            controlShowLoading(false);
         };
 
         const getNowPos = () => {
@@ -183,6 +189,7 @@ export default {
                     (event) => {
                         const { code, message } = event;
                         console.log("error", `code=${code}, msg=${message}`);
+                        getBikeStationInfo();
                     }
                 );
             }
@@ -190,16 +197,16 @@ export default {
 
         const setPage = (num) => {
             data.page = num;
-            setsinglePageList();
+            setSinglePageList();
         };
 
-        provide("totalPage", data.totalPage);
-        provide("page", data.page);
+        provide("totalPage", toRef(data, "totalPage"));
+        provide("page", toRef(data, "page"));
         provide("setPage", setPage);
 
         const singlePageList = reactive([]);
 
-        const setsinglePageList = () => {
+        const setSinglePageList = () => {
             const arr = [...availableList];
             const startIndex = (data.page - 1) * 30;
             const pageData = arr.splice(startIndex, 30);
@@ -220,7 +227,6 @@ export default {
 
         return {
             ...toRefs(data),
-            isSearchExist,
             getNearByInfo,
             availableList,
             mapReady,

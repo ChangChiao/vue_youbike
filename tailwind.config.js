@@ -6,13 +6,12 @@ module.exports = {
         extend: {
             colors: {
                 base: "#0E5978",
-                sub: "#f9bc60",
-                alert: "#f45d48",
                 bg: "#f8f5f2",
                 blue: "#F0F9FC",
                 primary: {
-                    300: "#F0F9FC",
-                    500: "#12749D",
+                    100: "#F0F9FC",
+                    300: "#12749D",
+                    500: "#0E5978",
                     700: "#0A4259"
                 },
                 red: {

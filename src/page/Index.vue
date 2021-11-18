@@ -1,9 +1,9 @@
 <template>
-    <div class="cover relative bg-blue">
-        <div class="search w-96 ml-40 pt-12">
+    <div class="cover relative bg-primary-100">
+        <div class="search w-4/5 m-auto md:ml-40 pt-12 md:w-96 relative z-10">
             <img class="w-60" src="/images/logo.png" alt="" />
-            <p class="text-3xl text-base font-extrabold">尋找單車,</p>
-            <p class="text-3xl text-base font-extrabold">
+            <p class="text-2xl text-primary-500 font-extrabold">尋找單車,</p>
+            <p class="text-2xl text-primary-500 font-extrabold pb-4">
                 來場悠閒的放鬆之旅！
             </p>
             <Search
@@ -14,7 +14,10 @@
                 :keyword="keyword"
             />
         </div>
-        <img class="fixed bottom-60" src="/images/illustration.png" />
+        <img
+            class="fixed bottom-60 md:bottom-6"
+            src="/images/illustration.png"
+        />
     </div>
 </template>
 
@@ -22,6 +25,7 @@
 import { reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import Search from "../components/Search.vue";
+import { CITY_LIST } from "../global/constant";
 export default {
     components: {
         Search
@@ -29,7 +33,7 @@ export default {
     setup() {
         const router = useRouter();
         const data = reactive({
-            city: "",
+            city: CITY_LIST[0].value,
             keyword: ""
         });
 
@@ -47,6 +51,7 @@ export default {
                 query: { keyword: data.keyword, city: data.city }
             });
         };
+
         return {
             ...toRefs(data),
             search,
@@ -61,7 +66,7 @@ export default {
 .cover {
     height: calc(100vh - 80px);
 }
-.cover:after {
+.cover:before {
     content: "";
     position: absolute;
     background-image: url("/images/Vector1.svg");
@@ -72,7 +77,7 @@ export default {
     top: 0;
     right: 0;
 }
-.cover:before {
+.cover:after {
     content: "";
     position: absolute;
     background-image: url("/images/Vector.svg");
@@ -82,5 +87,8 @@ export default {
     height: 300px;
     left: 0;
     bottom: 0;
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 }
 </style>
