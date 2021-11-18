@@ -71,7 +71,6 @@
 import Pagination from "../components/Pagination.vue";
 import Search from "../components/Search.vue";
 import { transType } from "../utils/common";
-import { watch } from "vue";
 export default {
     components: {
         Pagination,
@@ -105,10 +104,6 @@ export default {
         const search = () => {
             emit("search");
         };
-
-        watch("singlePageList", () => {
-            console.warn("change~~", singlePageList);
-        });
         return {
             setView,
             updateCity,

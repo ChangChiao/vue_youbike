@@ -97,7 +97,7 @@ export default {
             default: ""
         }
     },
-    emits: ["setView", "updateKeyword", "updateCity", "search"],
+    emits: ["drawLine", "updateKeyword", "updateCity", "search"],
     setup(props, { emit }) {
         const drawLine = (Geometry) => {
             emit("drawLine", Geometry);

@@ -1,6 +1,5 @@
 <template>
     <teleport to="#teleport-target">
-        {{ showLoading }}
         <div v-if="showLoading" class="loading-wrap">
             <svg
                 class="spinner"

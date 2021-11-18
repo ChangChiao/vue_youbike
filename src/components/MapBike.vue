@@ -54,6 +54,7 @@ export default {
         };
 
         const drawSelfMark = (latitude, longitude) => {
+            console.log("drawSelfMark======", drawSelfMark);
             map.setView([latitude, longitude], 18);
             L.marker([latitude, longitude], { icon: markSelf })
                 .addTo(map)
@@ -71,9 +72,7 @@ export default {
                 StationAddress,
                 ServiceStatus
             } = item;
-            cleanMarker();
-            // map.setView([latitude, longitude], 18).openPopup();
-            // setTimeout(() => {
+            // cleanMarker();
             map.setView([PositionLat, PositionLon], 20);
             L.popup()
                 .setLatLng([PositionLat, PositionLon])
@@ -120,12 +119,11 @@ export default {
                 </div> `
                 )
                 .openOn(map);
-            // }, 1000)
         };
 
         const createMark = () => {
             markNoAvailable = new L.Icon({
-                iconUrl: "./images/mark/no_rent.png",
+                iconUrl: "/images/mark/no_rent.png",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
@@ -133,7 +131,7 @@ export default {
                 // shadowSize: [41, 41]
             });
             markAvailable = new L.Icon({
-                iconUrl: "./images/mark/bike.png",
+                iconUrl: "/images/mark/bike.png",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
@@ -141,7 +139,7 @@ export default {
                 // shadowSize: [41, 41]
             });
             markSelf = new L.Icon({
-                iconUrl: "./images/mark/currentLocation.png",
+                iconUrl: "/images/mark/currentLocation.png",
                 shadowUrl: "",
                 iconSize: [40, 41],
                 iconAnchor: [12, 41],
@@ -159,12 +157,12 @@ export default {
                 let { AvailableRentBikes } = item;
                 const marker =
                     AvailableRentBikes > 0 ? markAvailable : markNoAvailable;
-                markLayer.addLayer(
-                    // L.marker([PositionLon, PositionLat], { icon: marker })
-                    L.marker([PositionLat, PositionLon], { icon: marker })
-                );
+                    console.log("mark===", marker);
+                // markLayer.addLayer(L.marker([PositionLat, PositionLon], { icon: marker }));
+                L.marker([PositionLat, PositionLon], { icon: marker })
+                .addTo(map)
             });
-            map.addLayer(markLayer);
+            // map.addLayer(markLayer);
         };
 
         onMounted(() => {
