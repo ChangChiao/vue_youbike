@@ -82,11 +82,13 @@ export default {
                     ${StationName.Zh_tw}
                 </h3>
                 <h4 class="pt-2 text-sm">
-                    <span v-html='<font-awesome-icon icon="map-marker-alt" />'></span>
-                    <font-awesome-icon icon="map-marker-alt" />
+                    <i class="fas fa-map-marker-alt text-lg  text-primary-500"></i>
                     ${StationAddress.Zh_tw}
                 </h4>
-                <p class="text-sm">${transTime(UpdateTime)}</p>
+                <p class="text-sm">
+                <i class="fas fa-history text-lg text-primary-500"></i>
+                    ${transTime(UpdateTime)}
+                </p>
                 <p class="py-2">
                     <span class="${transType(ServiceStatus, "color")}">
                         ${transType(ServiceStatus, "type")}
@@ -157,10 +159,11 @@ export default {
                 let { AvailableRentBikes } = item;
                 const marker =
                     AvailableRentBikes > 0 ? markAvailable : markNoAvailable;
-                    console.log("mark===", marker);
+                console.log("mark===", marker);
                 // markLayer.addLayer(L.marker([PositionLat, PositionLon], { icon: marker }));
-                L.marker([PositionLat, PositionLon], { icon: marker })
-                .addTo(map)
+                L.marker([PositionLat, PositionLon], { icon: marker }).addTo(
+                    map
+                );
             });
             // map.addLayer(markLayer);
         };

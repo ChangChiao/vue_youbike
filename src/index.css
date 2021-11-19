@@ -51,6 +51,8 @@
     @apply border-primary-500 border;
 }
 
-.rent-info p {
-    margin: 5px 0;
+.leaflet-popup-content p{
+    margin: 4px 0;
 }
+
+
