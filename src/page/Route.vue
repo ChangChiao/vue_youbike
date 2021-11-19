@@ -30,6 +30,7 @@ export default {
     },
     setup() {
         const mapInstance = ref(null);
+        const singlePageList = reactive([]);
         const data = reactive({
             keyword: "",
             city: CITY_LIST[0].value,
@@ -52,9 +53,7 @@ export default {
             };
             try {
                 const result = await getCyclingShape(sendData);
-                console.log("result", result);
                 if (result.length > 0) {
-                    console.log("innnnn");
                     Object.assign(routeDataList, result);
                     // data.bikeRoute = result[0].RouteName;
                     data.totalPage = Math.ceil(routeDataList.length / 30);
@@ -82,8 +81,6 @@ export default {
         provide("totalPage", toRef(data, "totalPage"));
         provide("page", toRef(data, "page"));
         provide("setPage", setPage);
-
-        const singlePageList = reactive([]);
 
         const setSinglePageList = () => {
             const arr = [...routeDataList];

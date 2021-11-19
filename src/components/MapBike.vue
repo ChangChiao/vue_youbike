@@ -54,7 +54,6 @@ export default {
         };
 
         const drawSelfMark = (latitude, longitude) => {
-            console.log("drawSelfMark======", drawSelfMark);
             map.setView([latitude, longitude], 18);
             L.marker([latitude, longitude], { icon: markSelf })
                 .addTo(map)
@@ -152,7 +151,6 @@ export default {
 
         const drawMark = () => {
             cleanMarker();
-            console.log("drawMark", props.singlePageList);
             props.singlePageList.forEach((item) => {
                 let { PositionLat, PositionLon } = item.StationPosition;
                 let { AvailableRentBikes } = item;
@@ -172,7 +170,6 @@ export default {
         });
 
         onBeforeUnmount(() => {
-            console.log("onBeforeUnmount--bikemap");
             map = null;
             markLayer = null;
         });

@@ -51,8 +51,6 @@
     @apply border-primary-500 border;
 }
 
-.leaflet-popup-content p{
+.leaflet-popup-content p {
     margin: 4px 0;
 }
-
-

@@ -58,7 +58,6 @@ export default {
             let str = Geometry.replace("MULTILINESTRING ((", "");
             let newStr = str.replace("))", "");
             let posArr = newStr.split(",");
-            console.log("newStr");
             const start = posArr[0] && posArr[0].split(" ");
             const end =
                 posArr[posArr.length - 1] &&

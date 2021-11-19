@@ -70,7 +70,6 @@ export default {
         };
 
         const setShowLoading = inject("setShowLoading");
-        console.log("setShowLoading--inject", setShowLoading);
         const controlShowLoading = (boolean) => {
             setShowLoading(boolean);
         };
@@ -79,10 +78,10 @@ export default {
         };
 
         const stationList = reactive([]);
+        let singlePageList = reactive([]);
 
         const getBikeStationInfo = async () => {
-            Object.assign(availableList, []);
-            console.log("getBikeStation");
+            singlePageList.length = 0
             const sendData = {
                 city: data.city,
                 $filter: data.keyword
@@ -91,7 +90,6 @@ export default {
             };
             try {
                 const result = await getBikeStation(sendData);
-                console.log("station", result);
                 Object.assign(stationList, result);
                 result.length > 0 && getBikeAvailble();
             } catch (error) {
@@ -100,15 +98,13 @@ export default {
         };
 
         const getNearByInfo = async ({ longitude, latitude }) => {
-            console.log("getNearByInfo", longitude, latitude);
-            Object.assign(availableList, []);
+            Object.assign(singlePageList, []);
             const sendData = {
                 city: data.city,
                 $spatialFilter: `nearby(${latitude},${longitude},${500})`
             };
             try {
                 const result = await getNearStation(sendData);
-                console.log("station", result);
                 Object.assign(stationList, result);
                 result.length > 0 && getNearByAvailble(longitude, latitude);
             } catch (error) {
@@ -120,27 +116,21 @@ export default {
         const getBikeAvailble = async () => {
             controlShowLoading(true);
             const sendData = {
-                city: data.city,
+                city: data.city
             };
             try {
                 const result = await getBikeAvailability(sendData);
-                let newData = stationList.filter(o1 => result.some(o2 => o1.StationUID === o2.StationUID));
-
-                console.log("newData", newData)
+                let newData = stationList.filter((o1) =>
+                    result.some((o2) => o1.StationUID === o2.StationUID)
+                );
                 newData.forEach((station, i) => {
                     result.forEach((available) => {
                         if (station.StationUID === available.StationUID) {
-                            console.log("8787", available)
-                            newData[i] = { ...station, ...available}
-                            // station.StationName = available.StationName;
-                            // station.StationPosition = available.StationPosition;
-                            // station.StationAddress = available.StationAddress;
+                            newData[i] = { ...station, ...available };
                         }
                     });
                 });
-                console.log("newData", newData);
                 Object.assign(availableList, newData);
-                console.log("availableList", availableList);
                 data.totalPage = Math.ceil(availableList.length / 30);
                 data.page = 1;
                 setSinglePageList();
@@ -167,7 +157,6 @@ export default {
                     });
                 });
                 Object.assign(availableList, result);
-                console.log("availableList", availableList);
                 data.totalPage = Math.ceil(availableList.length / 30);
                 data.page = 1;
                 setSinglePageList();
@@ -183,8 +172,6 @@ export default {
                     (position) => {
                         const longitude = position.coords.longitude;
                         const latitude = position.coords.latitude;
-                        console.log("longitude", longitude);
-                        console.log("latitude", latitude);
                         mapInstance.value.drawSelfMark(latitude, longitude);
                         getNearByInfo({ longitude, latitude });
                     },
@@ -206,14 +193,11 @@ export default {
         provide("page", toRef(data, "page"));
         provide("setPage", setPage);
 
-        const singlePageList = reactive([]);
-
         const setSinglePageList = () => {
             const arr = [...availableList];
             const startIndex = (data.page - 1) * 30;
             const pageData = arr.splice(startIndex, 30);
             Object.assign(singlePageList, pageData);
-            console.log("singlePageList", singlePageList);
             mapInstance.value.drawMark();
             const first = singlePageList[0];
             setView(first);

@@ -29,6 +29,7 @@
         </div>
         <div class="h-2/3 overflow-y-scroll mt-8 mb-4">
             <ul class="">
+                <li class=" text-center text-primary-500" v-if="singlePageList.length === 0">查無紀錄</li>
                 <li
                     v-for="item in singlePageList"
                     class="bg-grey-100 rounded-xl mb-3 px-2 py-4 cursor-pointer"

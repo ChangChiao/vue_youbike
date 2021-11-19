@@ -15,7 +15,7 @@
             />
         </div>
         <img
-            class="fixed bottom-60 md:bottom-6"
+            class="fixed bottom-60 md:bottom-40"
             src="/images/illustration.png"
         />
     </div>

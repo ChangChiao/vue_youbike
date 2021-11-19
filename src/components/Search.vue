@@ -20,7 +20,7 @@
                 {{ item.label }}
             </option>
         </select>
-        <button @click="search" class="ml-2 w-1/2">搜尋</button>
+        <button @click="search" class="ml-2 w-1/2 cursor-pointer">搜尋</button>
     </div>
 </template>
 
