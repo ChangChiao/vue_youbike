@@ -72,7 +72,7 @@ export default {
                 ServiceStatus
             } = item;
             // cleanMarker();
-            map.setView([PositionLat, PositionLon], 20);
+            map.setView([PositionLat, PositionLon], 16);
             L.popup()
                 .setLatLng([PositionLat, PositionLon])
                 .setContent(

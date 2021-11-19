@@ -70,12 +70,15 @@ export default {
         };
 
         const drawOtherInfo = (arr, type) => {
-            const posData = arr.map((vo) => vo.Position);
-            posData.forEach((item) => {
-                const { PositionLon, PositionLat } = item;
+            arr.forEach((item) => {
+                const { PositionLon, PositionLat } = item.Position;
                 let marks = type === "food" ? markFood : markSpot;
                 routeLayer.addLayer(
-                    L.marker([PositionLat, PositionLon], { icon: marks })
+                    L.marker([PositionLat, PositionLon], { icon: marks }).bindPopup(
+                        `<h1>${item.Name}</h1>
+                        <p>${item.OpenTime}</p>
+                        `
+                    )
                 );
             });
             map.addLayer(routeLayer);

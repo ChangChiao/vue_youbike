@@ -49,7 +49,10 @@ export default {
         const routeDataList = reactive([]);
         const getRoute = async () => {
             const sendData = {
-                city: data.city
+                city: data.city,
+                $filter: data.keyword
+                    ? `contains(RouteName,'${data.keyword}')`
+                    : ""
             };
             try {
                 const result = await getCyclingShape(sendData);
