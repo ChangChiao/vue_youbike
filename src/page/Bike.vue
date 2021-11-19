@@ -1,11 +1,13 @@
 <template>
     <div>
         <map-bike
+            v-show="showStatus || !isMobile"
             ref="mapInstance"
             :singlePageList="singlePageList"
             @mapReady="mapReady"
         />
         <bike-list
+            v-show="!showStatus || !isMobile"
             @search="search"
             @setView="setView"
             @updateCity="updateCity"
@@ -36,7 +38,9 @@ export default {
     },
     setup() {
         const mapInstance = ref(null);
+        const showStatus = ref(false); //true:map, false:list
         const route = useRoute();
+        const isMobile = inject("isMobile");
         const data = reactive({
             keyword: "",
             city: CITY_LIST[0].value,
@@ -81,7 +85,7 @@ export default {
         let singlePageList = reactive([]);
 
         const getBikeStationInfo = async () => {
-            singlePageList.length = 0
+            singlePageList.length = 0;
             const sendData = {
                 city: data.city,
                 $filter: data.keyword
@@ -189,9 +193,15 @@ export default {
             setSinglePageList();
         };
 
+        const setShowStatus = (boolean) => {
+            showStatus.value = boolean;
+        };
+
         provide("totalPage", toRef(data, "totalPage"));
         provide("page", toRef(data, "page"));
         provide("setPage", setPage);
+        provide("showStatus", showStatus);
+        provide("setShowStatus", setShowStatus);
 
         const setSinglePageList = () => {
             const arr = [...availableList];
@@ -221,7 +231,9 @@ export default {
             singlePageList,
             updateKeyword,
             setView,
-            search
+            search,
+            showStatus,
+            isMobile
         };
     }
 };

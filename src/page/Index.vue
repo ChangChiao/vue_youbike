@@ -87,7 +87,9 @@ export default {
     height: 300px;
     left: 0;
     bottom: 0;
-    @media screen and (max-width: 768px) {
+}
+@media screen and (max-width: 768px) {
+    .cover:after {
         display: none;
     }
 }

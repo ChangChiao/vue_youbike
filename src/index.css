@@ -44,7 +44,10 @@
 }
 
 .map {
+    top: 80px;
+    left: 384px;
     height: calc(100vh - 80px);
+    width: calc(100vw - 384px);
 }
 
 .leaflet-popup-content-wrapper {
@@ -53,4 +56,17 @@
 
 .leaflet-popup-content p {
     margin: 4px 0;
+}
+
+.for-mobile {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .for-mobile {
+        display: block;
+    }
+    .for-mobile-flex {
+        display: flex;
+    }
 }

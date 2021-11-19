@@ -43,7 +43,7 @@
                             class="text-primary-500"
                             icon="map-marker-alt"
                         />
-                        {{ item.City }} {{ item.Town || ""}}
+                        {{ item.City }} {{ item.Town || "" }}
                     </h4>
                     <p>
                         <span class="mr-8"

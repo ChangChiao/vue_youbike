@@ -21,7 +21,7 @@
         <ul class="menu flex">
             <li
                 v-for="item in menuList"
-                class="mx-3 text-lg text-primary-500"
+                class="mx-3 :mdtext-lg text-md text-primary-500"
                 :key="item.path"
             >
                 <router-link :to="item.path" class="duration-200">
@@ -29,6 +29,10 @@
                 </router-link>
             </li>
         </ul>
+        <font-awesome-icon
+            class="for-mobile text-lg text-gray-500"
+            icon="search"
+        />
     </header>
 </template>
 
@@ -58,9 +62,7 @@ header {
     /* height: 80px; */
 }
 .router-link-active {
-    font-size: 18px;
     color: red;
-    background: transparent;
-    @apply text-primary-500 border-b-2 font-bold border-primary-500;
+    @apply bg-primary-500 text-white font-bold p-1 rounded-md;
 }
 </style>
