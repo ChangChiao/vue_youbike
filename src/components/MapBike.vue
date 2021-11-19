@@ -155,11 +155,9 @@ export default {
             console.log("drawMark", props.singlePageList);
             props.singlePageList.forEach((item) => {
                 let { PositionLat, PositionLon } = item.StationPosition;
-                console.log("878787", PositionLat, PositionLon);
                 let { AvailableRentBikes } = item;
                 const marker =
                     AvailableRentBikes > 0 ? markAvailable : markNoAvailable;
-                console.log("mark===", marker);
                 // markLayer.addLayer(L.marker([PositionLat, PositionLon], { icon: marker }));
                 L.marker([PositionLat, PositionLon], { icon: marker }).addTo(
                     map

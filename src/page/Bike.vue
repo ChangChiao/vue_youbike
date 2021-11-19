@@ -81,18 +81,19 @@ export default {
         const stationList = reactive([]);
 
         const getBikeStationInfo = async () => {
+            Object.assign(availableList, []);
             console.log("getBikeStation");
             const sendData = {
                 city: data.city,
                 $filter: data.keyword
-                    ? `contains(StationAddress.Zh_tw,'${data.keyword}') or contains(StationName.Zh_tw,'${data.keyword}')`
+                    ? `contains(StationName/Zh_tw,'${data.keyword}')`
                     : ""
             };
             try {
                 const result = await getBikeStation(sendData);
                 console.log("station", result);
                 Object.assign(stationList, result);
-                getBikeAvailble();
+                result.length > 0 && getBikeAvailble();
             } catch (error) {
                 console.log("error", error);
             }
@@ -100,18 +101,16 @@ export default {
 
         const getNearByInfo = async ({ longitude, latitude }) => {
             console.log("getNearByInfo", longitude, latitude);
+            Object.assign(availableList, []);
             const sendData = {
                 city: data.city,
-                $filter: data.keyword
-                    ? `contains(StationAddress.Zh_tw,'${data.keyword}') or contains(StationName.Zh_tw,'${data.keyword}')`
-                    : "",
                 $spatialFilter: `nearby(${latitude},${longitude},${500})`
             };
             try {
                 const result = await getNearStation(sendData);
                 console.log("station", result);
                 Object.assign(stationList, result);
-                getNearByAvailble(longitude, latitude);
+                result.length > 0 && getNearByAvailble(longitude, latitude);
             } catch (error) {
                 console.log("error", error);
             }
@@ -122,22 +121,25 @@ export default {
             controlShowLoading(true);
             const sendData = {
                 city: data.city,
-                $filter: data.keyword
-                    ? `contains(StationAddress.Zh_tw,'${data.keyword}') or contains(StationName.Zh_tw,'${data.keyword}')`
-                    : ""
             };
             try {
                 const result = await getBikeAvailability(sendData);
-                result.forEach((available) => {
-                    stationList.forEach((station) => {
+                let newData = stationList.filter(o1 => result.some(o2 => o1.StationUID === o2.StationUID));
+
+                console.log("newData", newData)
+                newData.forEach((station, i) => {
+                    result.forEach((available) => {
                         if (station.StationUID === available.StationUID) {
-                            available.StationName = station.StationName;
-                            available.StationPosition = station.StationPosition;
-                            available.StationAddress = station.StationAddress;
+                            console.log("8787", available)
+                            newData[i] = { ...station, ...available}
+                            // station.StationName = available.StationName;
+                            // station.StationPosition = available.StationPosition;
+                            // station.StationAddress = available.StationAddress;
                         }
                     });
                 });
-                Object.assign(availableList, result);
+                console.log("newData", newData);
+                Object.assign(availableList, newData);
                 console.log("availableList", availableList);
                 data.totalPage = Math.ceil(availableList.length / 30);
                 data.page = 1;

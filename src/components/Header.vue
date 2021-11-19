@@ -58,7 +58,7 @@ header {
     /* height: 80px; */
 }
 .router-link-active {
-    font-size: 22px;
+    font-size: 18px;
     color: red;
     background: transparent;
     @apply text-primary-500 border-b-2 font-bold border-primary-500;
