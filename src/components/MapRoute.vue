@@ -124,7 +124,7 @@ export default {
 
         const createMark = () => {
             mark = new L.Icon({
-                iconUrl: "/images/mark/no_rent.png",
+                iconUrl: "./images/mark/no_rent.png",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
@@ -132,7 +132,7 @@ export default {
                 // shadowSize: [41, 41]
             });
             markFood = new L.Icon({
-                iconUrl: "/images/mark/food.png",
+                iconUrl: "./images/mark/food.png",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
@@ -140,7 +140,7 @@ export default {
                 // shadowSize: [41, 41]
             });
             markSpot = new L.Icon({
-                iconUrl: "/images/mark/spot.png",
+                iconUrl: "./images/mark/spot.png",
                 shadowUrl: "",
                 iconSize: [40, 40],
                 iconAnchor: [12, 41],
