@@ -60,6 +60,9 @@ export default {
 
         const routeDataList = reactive([]);
         const getRoute = async () => {
+            routeDataList.length = 0;
+            singlePageList.length = 0;
+            console.log("singlePageList--route", singlePageList);
             const sendData = {
                 city: data.city,
                 $filter: data.keyword

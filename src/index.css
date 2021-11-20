@@ -51,8 +51,8 @@
     width: calc(100vw - 384px);
 }
 
-.list{
-    height: calc(100vh - 80px - 320px - 40px)
+.list {
+    height: calc(100vh - 80px - 320px - 40px);
 }
 
 .leaflet-popup-content-wrapper {
@@ -79,7 +79,7 @@
         height: calc(100vh - 80px);
         @apply w-screen;
     }
-    .list{
-      height: calc(100vh - 80px - 220px)
-}
+    .list {
+        height: calc(100vh - 80px - 220px);
+    }
 }

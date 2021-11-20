@@ -19,7 +19,9 @@
             <div class="rounded-xl shadow-lg overflow-hidden">
                 <div class="md:h-8 md:block hidden bg-primary-500"></div>
                 <div class="p-4">
-                    <h1 class="md:text-3xl hidden md:block font-bold mb-6">尋找單車</h1>
+                    <h1 class="md:text-3xl hidden md:block font-bold mb-6">
+                        尋找單車
+                    </h1>
                     <Search
                         @search="search"
                         @updateCity="updateCity"
