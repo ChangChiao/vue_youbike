@@ -9,19 +9,18 @@ import "vue-toast-notification/dist/theme-sugar.css";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-    faPhone,
     faMapMarkerAlt,
     faSearch,
     faExchangeAlt,
-    faRoute
+    faRoute,
+    faCrosshairs
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faPhone);
 library.add(faMapMarkerAlt);
 library.add(faSearch);
 library.add(faExchangeAlt);
 library.add(faRoute);
-// export const app = createApp(App);
+library.add(faCrosshairs);
 const app = createApp(App);
 
 // app.config.globalProperties.$app = app;

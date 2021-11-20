@@ -19,8 +19,28 @@
             <div class="rounded-xl shadow-lg overflow-hidden">
                 <div class="md:h-8 md:block hidden bg-primary-500"></div>
                 <div class="p-4">
-                    <h1 class="md:text-3xl hidden md:block font-bold mb-6">
+                    <h1
+                        class="
+                            md:text-3xl
+                            text-2xl
+                            font-bold
+                            md:mb-6
+                            mb-2
+                            flex
+                            justify-between
+                            items-center
+                        "
+                    >
                         尋找單車
+                        <i
+                            class="
+                                fas
+                                fa-crosshairs
+                                text-primary-300
+                                cursor-pointer
+                            "
+                            @click="getNowPos"
+                        ></i>
                     </h1>
                     <Search
                         @search="search"
@@ -112,7 +132,7 @@ export default {
             default: ""
         }
     },
-    emits: ["setView", "updateKeyword", "updateCity", "search"],
+    emits: ["setView", "updateKeyword", "updateCity", "search", "getNowPos"],
     setup(props, { emit }) {
         const setShowStatus = inject("setShowStatus");
 
@@ -132,12 +152,17 @@ export default {
         const search = () => {
             emit("search");
         };
+
+        const getNowPos = () => {
+            emit("getNowPos");
+        };
         return {
             setView,
             updateCity,
             updateKeyword,
             search,
-            transType
+            transType,
+            getNowPos
         };
     }
 };

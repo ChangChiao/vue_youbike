@@ -33,7 +33,7 @@ export default {
     setup() {
         const router = useRouter();
         const data = reactive({
-            city: "",
+            city: CITY_LIST[0].value,
             keyword: ""
         });
 

@@ -80,6 +80,6 @@
         @apply w-screen;
     }
     .list {
-        height: calc(100vh - 80px - 220px);
+        height: calc(100vh - 80px - 280px);
     }
 }

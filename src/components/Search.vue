@@ -11,7 +11,7 @@
     </div>
     <div class="flex pt-3">
         <select class="w-1/2" :value="city" @change="updateCity">
-            <option value="">縣市</option>
+            <!-- <option value="">縣市</option> -->
             <option
                 v-for="item in CITY_LIST"
                 :key="item.value"

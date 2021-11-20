@@ -12,6 +12,7 @@
             @setView="setView"
             @updateCity="updateCity"
             @updateKeyword="updateKeyword"
+            @getNowPos="getNowPos"
             :singlePageList="singlePageList"
             :city="city"
             :keyword="keyword"
@@ -65,12 +66,7 @@ export default {
             if (queryKeyword) {
                 data.keyword = queryKeyword;
             }
-            if (queryCity || queryKeyword) {
-                getBikeStationInfo();
-            } else {
-                console.log("getNowPos!!!");
-                getNowPos();
-            }
+            getBikeStationInfo();
         };
 
         const setShowLoading = inject("setShowLoading");
@@ -84,8 +80,14 @@ export default {
         const stationList = reactive([]);
         let singlePageList = reactive([]);
 
-        const getBikeStationInfo = async () => {
+        const resetList = () => {
+            stationList.length = 0;
+            availableList.length = 0;
             singlePageList.length = 0;
+        };
+
+        const getBikeStationInfo = async () => {
+            resetList();
             const sendData = {
                 city: data.city,
                 $filter: data.keyword
@@ -102,7 +104,7 @@ export default {
         };
 
         const getNearByInfo = async ({ longitude, latitude }) => {
-            Object.assign(singlePageList, []);
+            resetList();
             const sendData = {
                 city: data.city,
                 $spatialFilter: `nearby(${latitude},${longitude},${500})`
@@ -233,7 +235,8 @@ export default {
             setView,
             search,
             showStatus,
-            isMobile
+            isMobile,
+            getNowPos
         };
     }
 };
