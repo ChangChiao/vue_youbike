@@ -30,7 +30,7 @@
     }
 
     .status {
-        @apply rounded-md h-4 w-8 border mr-4 p-1;
+        @apply rounded-md h-4 w-8 border mr-2 p-1;
     }
     .available {
         @apply status border-primary-500 bg-primary-100;
@@ -44,10 +44,15 @@
 }
 
 .map {
+    position: fixed;
     top: 80px;
     left: 384px;
     height: calc(100vh - 80px);
     width: calc(100vw - 384px);
+}
+
+.list{
+    height: calc(100vh - 80px - 320px - 40px)
 }
 
 .leaflet-popup-content-wrapper {
@@ -69,4 +74,12 @@
     .for-mobile-flex {
         display: flex;
     }
+    .map {
+        left: 0px;
+        height: calc(100vh - 80px);
+        @apply w-screen;
+    }
+    .list{
+      height: calc(100vh - 80px - 220px)
+}
 }

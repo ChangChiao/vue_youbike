@@ -1,5 +1,6 @@
 <template>
-    <div id="map_route" class="map w-screen relative z-10"></div>
+    <div id="map_route" class="map fixed z-10"></div>
+    <ViewBar v-if="isMobile" />
 </template>
 
 <script>
@@ -10,8 +11,12 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster/dist/leaflet.markercluster";
 import { getRestaurant, getSpot } from "../utils/api";
 import * as Wkt from "wicket";
-import { onMounted, onBeforeUnmount } from "vue";
+import { onMounted, onBeforeUnmount, inject } from "vue";
+import ViewBar from "../components/ViewBar.vue";
 export default {
+    components: {
+        ViewBar
+    },
     props: {
         city: {
             type: String,
@@ -20,6 +25,7 @@ export default {
     },
     emits: ["getRoute"],
     setup(props, { emit }) {
+        const isMobile = inject("isMobile");
         let map = null;
         let mark = null;
         let markFood = null;
@@ -74,7 +80,9 @@ export default {
                 const { PositionLon, PositionLat } = item.Position;
                 let marks = type === "food" ? markFood : markSpot;
                 routeLayer.addLayer(
-                    L.marker([PositionLat, PositionLon], { icon: marks }).bindPopup(
+                    L.marker([PositionLat, PositionLon], {
+                        icon: marks
+                    }).bindPopup(
                         `<h1>${item.Name}</h1>
                         <p>${item.OpenTime}</p>
                         `
@@ -178,7 +186,8 @@ export default {
             routeLayer = null;
         });
         return {
-            drawLine
+            drawLine,
+            isMobile
         };
     }
 };

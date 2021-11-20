@@ -1,11 +1,13 @@
 <template>
-    <v-pagination
-        :v-model="page"
-        :pages="totalPage"
-        :range-size="1"
-        active-color="#DCEDFF"
-        @update:modelValue="updateHandler"
-    />
+    <div class="pt-4 flex justify-center">
+        <v-pagination
+            :v-model="page"
+            :pages="totalPage"
+            :range-size="1"
+            active-color="#DCEDFF"
+            @update:modelValue="updateHandler"
+        />
+    </div>
 </template>
 
 <script>

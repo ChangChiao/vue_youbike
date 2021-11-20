@@ -1,5 +1,6 @@
 <template>
     <div id="map" class="map fixed z-10"></div>
+    <ViewBar v-if="isMobile" />
 </template>
 
 <script>
@@ -8,9 +9,13 @@ import L from "leaflet";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster/dist/leaflet.markercluster";
-import { onMounted, onBeforeUnmount } from "vue";
+import { onMounted, onBeforeUnmount, inject } from "vue";
 import { transType, transTime } from "../utils/common";
+import ViewBar from "../components/ViewBar.vue";
 export default {
+    components: {
+        ViewBar
+    },
     props: {
         singlePageList: {
             type: Array,
@@ -19,6 +24,7 @@ export default {
     },
     emits: ["mapReady"],
     setup(props, { emit }) {
+        const isMobile = inject("isMobile");
         let map = null;
         let markLayer = null;
         let markSelf = null;
@@ -73,9 +79,11 @@ export default {
             } = item;
             // cleanMarker();
             // map.panTo(new L.LatLng(PositionLat, PositionLon));
-            L.popup().setLatLng([PositionLat, PositionLon]).openOn(map)
-            .setContent(
-                `
+            L.popup()
+                .setLatLng([PositionLat, PositionLon])
+                .openOn(map)
+                .setContent(
+                    `
             <h3 class="text-xl font-bold">
                 ${StationName.Zh_tw}
             </h3>
@@ -93,31 +101,27 @@ export default {
                 </span>
                 <span
                     class="
-                        ${
-                            AvailableRentBikes > 0
-                                ? "available"
-                                : "no-available"
-                        }
+                        ${AvailableRentBikes > 0 ? "available" : "no-available"}
                     "
                     >
                         ${AvailableRentBikes > 0 ? "尚有單車" : "已無單車"}
                     </span>
             </p>
             <div class="rent-info flex items-center justify-between">
-                <div class="w-1/2 h-24 flex flex-col justify-center rounded-md border-primary-500 mr-4 text-center border">
+                <div class="w-1/2 md:h-24 h-16 flex flex-col justify-center rounded-md border-primary-500 mr-4 text-center border">
                     <p class="font-bold my-1 text-primary-500 text-base">可借單車</p>
                     <p class="font-bold text-2xl">
                         ${AvailableRentBikes}
                     </p>
                 </div>
-                <div class="w-1/2 h-24 flex flex-col justify-center rounded-md border-primary-500 text-center border">
+                <div class="w-1/2 md:h-24 h-16 flex flex-col justify-center rounded-md border-primary-500 text-center border">
                     <p class="font-bold text-primary-500 text-base">可停空位</p>
                     <p class="font-bold text-2xl">
                         ${AvailableReturnBikes}
                     </p>
                 </div>
             </div> `
-            )
+                );
             map.setView([PositionLat, PositionLon], 18);
         };
 
@@ -164,9 +168,11 @@ export default {
                 const marker =
                     AvailableRentBikes > 0 ? markAvailable : markNoAvailable;
                 // markLayer.addLayer(
-                    L.marker([PositionLat, PositionLon], {
-                        icon: marker
-                    }).addTo(map).bindPopup(
+                L.marker([PositionLat, PositionLon], {
+                    icon: marker
+                })
+                    .addTo(map)
+                    .bindPopup(
                         `
                 <h3 class="text-xl font-bold">
                     ${StationName.Zh_tw}
@@ -209,8 +215,8 @@ export default {
                         </p>
                     </div>
                 </div> `
-                    )
-                
+                    );
+
                 // .addTo(map);
 
                 // L.marker([PositionLat, PositionLon], { icon: marker }).addTo(
@@ -234,7 +240,8 @@ export default {
             drawMark,
             setView,
             transType,
-            transTime
+            transTime,
+            isMobile
         };
     }
 };

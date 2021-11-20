@@ -15,7 +15,7 @@
             />
         </div>
         <img
-            class="fixed bottom-60 md:bottom-40"
+            class="fixed bottom-10 md:w-2/3 left-0 right-0 mx-auto md:bottom-40"
             src="/images/illustration.png"
         />
     </div>

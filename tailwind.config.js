@@ -29,6 +29,9 @@ module.exports = {
                     700: "#3e3232",
                     900: "#232323"
                 }
+            },
+            screens: {
+                iphone6: "375px"
             }
         }
     },

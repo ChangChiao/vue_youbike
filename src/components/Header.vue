@@ -29,10 +29,10 @@
                 </router-link>
             </li>
         </ul>
-        <font-awesome-icon
+        <!-- <font-awesome-icon
             class="for-mobile text-lg text-gray-500"
             icon="search"
-        />
+        /> -->
     </header>
 </template>
 

@@ -1,11 +1,13 @@
 <template>
     <map-route
+        v-show="showStatus || !isMobile"
         ref="mapInstance"
         :city="city"
         :singlePageList="singlePageList"
         @getRoute="getRoute"
     />
     <route-list
+        v-show="!showStatus || !isMobile"
         @search="search"
         @drawLine="drawLine"
         @updateCity="updateCity"
@@ -17,10 +19,18 @@
 </template>
 
 <script>
-import { provide } from "vue";
 import MapRoute from "../components/MapRoute.vue";
 import RouteList from "../components/RouteList.vue";
-import { onMounted, reactive, toRefs, toRef, ref, computed } from "vue";
+import {
+    provide,
+    inject,
+    onMounted,
+    reactive,
+    toRefs,
+    toRef,
+    ref,
+    computed
+} from "vue";
 import { getCyclingShape } from "../utils/api";
 import { CITY_LIST } from "../global/constant";
 export default {
@@ -30,7 +40,9 @@ export default {
     },
     setup() {
         const mapInstance = ref(null);
+        const showStatus = ref(false);
         const singlePageList = reactive([]);
+        const isMobile = inject("isMobile");
         const data = reactive({
             keyword: "",
             city: CITY_LIST[0].value,
@@ -81,9 +93,15 @@ export default {
             mapInstance.value.drawLine(Geometry);
         };
 
+        const setShowStatus = (boolean) => {
+            showStatus.value = boolean;
+        };
+
         provide("totalPage", toRef(data, "totalPage"));
         provide("page", toRef(data, "page"));
         provide("setPage", setPage);
+        provide("showStatus", showStatus);
+        provide("setShowStatus", setShowStatus);
 
         const setSinglePageList = () => {
             const arr = [...routeDataList];
@@ -105,7 +123,9 @@ export default {
             getRoute,
             mapInstance,
             drawLine,
-            search
+            search,
+            isMobile,
+            showStatus
         };
     }
 };
