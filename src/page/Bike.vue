@@ -210,7 +210,7 @@ export default {
             const startIndex = (data.page - 1) * 30;
             const pageData = arr.splice(startIndex, 30);
             Object.assign(singlePageList, pageData);
-            mapInstance.value.drawMark();
+            mapInstance.value.drawMark(singlePageList);
             const first = singlePageList[0];
             setView(first);
         };

@@ -2,11 +2,6 @@ import moment from "moment";
 export const showToast = (msg, type = "success") => {
     if (msg) {
         console.log(msg, type);
-        // app.$toast.open({
-        //     message: msg,
-        //     type: type
-        //     // all of other options may go here
-        // });
     }
 };
 

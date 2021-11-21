@@ -152,9 +152,9 @@ export default {
             });
         };
 
-        const drawMark = () => {
+        const drawMark = (singlePageList) => {
             cleanMarker();
-            props.singlePageList.forEach((item) => {
+            singlePageList.forEach((item) => {
                 let { PositionLat, PositionLon } = item.StationPosition;
                 let {
                     AvailableRentBikes,
@@ -164,14 +164,12 @@ export default {
                     StationAddress,
                     ServiceStatus
                 } = item;
-                console.log("item", item);
                 const marker =
                     AvailableRentBikes > 0 ? markAvailable : markNoAvailable;
-                // markLayer.addLayer(
+                markLayer.addLayer(
                 L.marker([PositionLat, PositionLon], {
                     icon: marker
                 })
-                    .addTo(map)
                     .bindPopup(
                         `
                 <h3 class="text-xl font-bold">
@@ -215,15 +213,9 @@ export default {
                         </p>
                     </div>
                 </div> `
-                    );
-
-                // .addTo(map);
-
-                // L.marker([PositionLat, PositionLon], { icon: marker }).addTo(
-                //     map
-                // );
+                ));
             });
-            // map.addLayer(markLayer);
+            map.addLayer(markLayer);
         };
 
         onMounted(() => {
