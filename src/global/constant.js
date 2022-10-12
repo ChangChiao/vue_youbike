@@ -1,8 +1,10 @@
-export const API_URL = "https://ptx.transportdata.tw/MOTC/v2";
+// export const API_URL = "https://ptx.transportdata.tw/MOTC/v2";
+
+export const API_URL = "https://tdx.transportdata.tw/api/basic/v2";
 //bike
-export const API_STATION = API_URL + "/Bike/Station";
-export const API_AVAILABLE = API_URL + "/Bike/Availability";
-export const API_SHAPE = API_URL + "/Cycling/Shape";
+export const API_STATION = API_URL + "/Bike/Station/City";
+export const API_AVAILABLE = API_URL + "/Bike/Availability/City";
+export const API_SHAPE = API_URL + "/Cycling/Shape/City";
 export const API_NEAYBY_STATION = API_URL + "/Bike/Station/NearBy";
 export const API_NEAYBY_AVAILABLE = API_URL + "/Bike/Availability/NearBy";
 //spot
