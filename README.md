@@ -2,7 +2,7 @@
 
 ## Demo 網址
 
-👉 [Bike Fun](https://changchiao.github.io/vue_youbike/#/)
+👉 [Bike Fun](https://vue-youbike.vercel.app/#/)
 
 ## Designer
 
