@@ -11,7 +11,6 @@ import {
 } from "../global/constant";
 import jsSHA from "jssha";
 
-let timer = 0;
 
 // const getAuthorizationHeader = () => {
 //     let AppID = import.meta.env.VITE_APP_ID;
@@ -30,13 +29,7 @@ let timer = 0;
 //     };
 // };
 
-const getAuthorizationHeader = () => {
-    const token = localStorage.getItem("token");
-    return {
-        authorization: `Bearer ${token}`,
-        "Content-Type": "application/x-www-form-urlencoded"
-    };
-};
+
 const getCity = (data) => {
     const { city } = data;
     delete data.city;
@@ -46,7 +39,6 @@ const getCity = (data) => {
 export const getBikeStation = (sendData) => {
     const { cityPath, data } = getCity(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data
         }
@@ -57,7 +49,6 @@ export const getBikeStation = (sendData) => {
 export const getBikeAvailability = (sendData) => {
     const { cityPath, data } = getCity(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data
         }
@@ -68,7 +59,6 @@ export const getBikeAvailability = (sendData) => {
 export const getCyclingShape = (sendData) => {
     const { cityPath, data } = getCity(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data
         }
@@ -78,7 +68,6 @@ export const getCyclingShape = (sendData) => {
 
 export const getNearStation = (data) => {
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data
         }
@@ -88,7 +77,6 @@ export const getNearStation = (data) => {
 
 export const getNearAvailble = (data) => {
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data
         }
@@ -100,7 +88,6 @@ export const getNearAvailble = (data) => {
 export const getRestaurant = (sendData) => {
     const { cityPath, data } = getCity(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data
         }
@@ -111,7 +98,6 @@ export const getRestaurant = (sendData) => {
 export const getSpot = (sendData) => {
     const { cityPath, data } = getCity(sendData);
     let config = {
-        headers: getAuthorizationHeader(),
         params: {
             ...data
         }
@@ -120,8 +106,6 @@ export const getSpot = (sendData) => {
 };
 
 export const getToken = () => {
-    if (Date.now() - timer < 3000) return Promise.reject("fail");
-    timer = Date.now();
     const data = {
         grant_type: "client_credentials",
         client_id: import.meta.env.VITE_APP_ID,

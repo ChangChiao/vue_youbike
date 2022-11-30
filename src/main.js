@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import { getToken } from "./utils/api";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import VueToast from "vue-toast-notification";
 import "./index.css";
@@ -21,6 +22,26 @@ library.add(faSearch);
 library.add(faExchangeAlt);
 library.add(faRoute);
 library.add(faCrosshairs);
+
+
+const checkToken = async () => {
+    if (
+      new Date().getTime() / 1000 <=
+          Number(localStorage.getItem('expireTime'))
+    ) { return }
+    const res = await getToken()
+    if (res.access_token) {
+      localStorage.setItem('token', res.access_token)
+      localStorage.setItem(
+        'expireTime',
+        new Date().getTime() / 1000 + res.expires_in
+      )
+    }
+  }
+
+  checkToken()
+
+
 const app = createApp(App);
 
 // app.config.globalProperties.$app = app;
